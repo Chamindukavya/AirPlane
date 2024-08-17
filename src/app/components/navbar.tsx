@@ -28,7 +28,7 @@ const Navbar: React.FC = async () => {
               <Logout />
             ) : (
               <Link href="/Signup" className="text-white hover:text-gray-200">
-                Sign Up
+                Sign up
               </Link>
             )}
           </div>
