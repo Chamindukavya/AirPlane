@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "typeRoots": ["node_modules/@types"],
     "plugins": [
       {
         "name": "next"
@@ -24,3 +25,4 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth]/route.ts/route.js", "src/app/api/auth/route.js"],
   "exclude": ["node_modules"]
 }
+
