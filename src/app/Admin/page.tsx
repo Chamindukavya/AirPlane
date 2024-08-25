@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export default function page() {
+
+export default async function Page() {
+  
   return (
-    <div>This is a admin page. Have access only to admins</div>
-  )
+    <div>
+      
+    </div>
+  );
 }
