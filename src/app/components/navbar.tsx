@@ -19,6 +19,10 @@ const Navbar: React.FC = async () => {
             <Link href="/" className="text-white hover:text-gray-200">
               Home
             </Link>
+            {session?.user?.is_admin == 1 ? (<Link href="/Admin" className="text-white hover:text-gray-200">
+              Admin
+            </Link>):(null)}
+            
             {session?.user? (<></>
               
             ):(<Link href="/Login" className="text-white hover:text-gray-200">
