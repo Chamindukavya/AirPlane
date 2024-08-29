@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
     let get_exp_query = ''
 
-    get_exp_query = 'SELECT * FROM students.std_profile'
+    get_exp_query = 'SELECT * FROM airlineproject.std_profile'
 
     // we can use this array to pass parameters to the SQL query
 

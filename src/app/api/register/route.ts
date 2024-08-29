@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     // Check if the user already exists
     const [rows] = await connection.query<RowDataPacket[]>(
-      'SELECT email FROM students.user WHERE email = ?',
+      'SELECT email FROM airlineproject.user WHERE email = ?',
       [email]
     );
     if (rows.length > 0) {
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     // Insert the new user into the database
     const query = `
-      INSERT INTO students.user (user_name, email, password,dob)
+      INSERT INTO airlineproject.user (user_name, email, password,dob)
       VALUES (?, ?, ?,?)
     `;
     await connection.query(query, [name, email, hashedPassword,dob]);

@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { authOptions } from "./lib/auth";
+import AirportSearch from './components/AirportSearch';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -9,7 +10,9 @@ export default async function Home() {
     <div>
       <p>
         Hello {session?.user?.name}! <br />
+        
       </p>
+      <AirportSearch />
     </div>
   );
 }
