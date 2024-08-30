@@ -6,19 +6,47 @@ let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
   try {
-    const { flight_id, user_id, seat_number,} = await request.json();
+    const { flight_id, user_id, no_tickets, passengerDetails } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
-    const insert_query = `
-      INSERT INTO students.bookings (flight_id, user_id, seat_number)
-      VALUES (?, ?, ?)
-    `;
+    // Start a transaction
+    await connection.beginTransaction();
 
-    const [results] = await connection.execute(insert_query, [flight_id, user_id, seat_number]);
+    // Insert booking details
+    const [result]: any = await connection.execute(
+      `
+      INSERT INTO students.bookings (flight_id, user_id, no_tickets)
+      VALUES (?, ?, ?)
+      `,
+      [flight_id, user_id, no_tickets]
+    );
+
+    // Fetch the booking_id of the newly added booking
+    const booking_id = result.insertId;
+    console.log('booking_id: ', booking_id);
+
+    // Insert passenger details
+    const insert_query_passenger = `
+      INSERT INTO students.passenger (booking_id, dob, age, name, seat_id, passport_num)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    for (const passenger of passengerDetails) {
+      await connection.execute(insert_query_passenger, [
+        booking_id,
+        passenger.dob,
+        passenger.age,
+        passenger.name,
+        passenger.seatId,
+        passenger.passportNum,
+      ]);
+    }
+
+    // Commit the transaction
+    await connection.commit();
 
     connection.end();
-    
-    return NextResponse.json({ message: 'Data added successfully', results });
+
+    return NextResponse.json({ message: 'Data added successfully', booking_id });
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
 
