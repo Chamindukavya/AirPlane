@@ -84,7 +84,7 @@ export default function BookingPage() {
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-900">Booking Page</h1>
-        <p className="text-lg mb-4 text-gray-700">Booking for Schedule ID: <span className="font-semibold">{scheduleid}</span></p>
+        <p className="text-lg mb-4 text-gray-700">flight ID: <span className="font-semibold">{scheduleid}</span></p>
         <p className="text-lg mb-4 text-gray-700">
           Your name: <span className="font-semibold">{session?.user?.name || "Guest"}</span> <br />
           Your id: <span className="font-semibold">{session?.user?.id || "N/A"}</span>

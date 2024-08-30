@@ -10,7 +10,9 @@ export default async function Home() {
         Hello {session?.user?.name}! <br />
       </p>
 
-
+    <button className=" bg-slate-400 hover:bg-slate-300">
+      <a href="/flights">Flights</a>
+    </button>
 
     </div>
   );

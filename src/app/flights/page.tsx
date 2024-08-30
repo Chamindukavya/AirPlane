@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type FlightSchedule = {
+  flight_id: number;
   flightSchedule_id: number;
-  date: string;
-  origin_airport: string;
-  destination_airport: string;
-  price_economy: number;
-  price_business: number;
+  start_time: string;
+  end_time: string;
+  aircraft_id: number;
 };
 
 export default function FlightSchedulePage() {
@@ -19,7 +18,7 @@ export default function FlightSchedulePage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/flightSchedule/show");
+        const response = await fetch("/api/flight/show");
         const data: FlightSchedule[] = await response.json();
         setSchedules(data);
         setLoading(false);
@@ -39,28 +38,28 @@ export default function FlightSchedulePage() {
   // Function to handle booking, it will navigate to /booking
   const handleBooking = (schedule: FlightSchedule) => {
     console.log("Booking for schedule", schedule);
-    router.push(`/booking/${schedule.flightSchedule_id}`);
+    router.push(`/booking/${schedule.flight_id}`);
   };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {schedules.map((schedule, index) => (
         <div key={index} className="p-4 border rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold">Flight Schedule</h3>
+          <h3 className="text-lg font-semibold">Flight</h3>
           <p>
-            <strong>Date:</strong> {schedule.date}
+            <strong>Flight ID:</strong> {schedule.flight_id}
           </p>
           <p>
-            <strong>Origin Airport:</strong> {schedule.origin_airport}
+            <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
           </p>
           <p>
-            <strong>Destination Airport:</strong> {schedule.destination_airport}
+            <strong>Start Time:</strong> {schedule.start_time}
           </p>
           <p>
-            <strong>Economy Price:</strong> ${schedule.price_economy}
+            <strong>End Time:</strong>{schedule.end_time}
           </p>
           <p>
-            <strong>Business Price:</strong> ${schedule.price_business}
+            <strong>Air Craft:</strong>{schedule.aircraft_id}
           </p>
           <button
             onClick={() => handleBooking(schedule)}

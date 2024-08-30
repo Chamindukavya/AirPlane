@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
 
     // Start a transaction
     await connection.beginTransaction();
-
-    // Insert booking details
     const [result]: any = await connection.execute(
       `
       INSERT INTO students.bookings (flight_id, user_id, no_tickets)
@@ -30,8 +28,14 @@ export async function POST(request: NextRequest) {
       INSERT INTO students.passenger (booking_id, dob, age, name, seat_id, passport_num)
       VALUES (?, ?, ?, ?, ?, ?)
     `;
+
+    const insert_query_ticket = `
+      INSERT INTO students.ticket (passenger_id, class, flight_id)
+      VALUES (?, ?, ?)
+    `;
+
     for (const passenger of passengerDetails) {
-      await connection.execute(insert_query_passenger, [
+      const [result2]: any = await connection.execute(insert_query_passenger, [
         booking_id,
         passenger.dob,
         passenger.age,
@@ -39,13 +43,10 @@ export async function POST(request: NextRequest) {
         passenger.seatId,
         passenger.passportNum,
       ]);
+      const passenger_id = result2.insertId;
+      await connection.execute(insert_query_ticket, [passenger_id, 'Economy', flight_id]);
     }
-
-    const insert_query_ticket = `
-      INSERT INTO students.passenger (passenger_id, class, age, name, seat_id, passport_num)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
-
+    
     // Commit the transaction
     await connection.commit();
 
