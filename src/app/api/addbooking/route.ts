@@ -41,6 +41,11 @@ export async function POST(request: NextRequest) {
       ]);
     }
 
+    const insert_query_ticket = `
+      INSERT INTO students.passenger (passenger_id, class, age, name, seat_id, passport_num)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
     // Commit the transaction
     await connection.commit();
 
