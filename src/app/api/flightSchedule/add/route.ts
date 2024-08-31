@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const connection = await mysql.createConnection(connectionParams);
 
     const insert_query = `
-      INSERT INTO students.flightschedule (date, origin_airport, destination_airport, price_economy, price_business)
+      INSERT INTO airlineproject.flightschedule (date, origin_airport, destination_airport, price_economy, price_business)
       VALUES (?, ?, ?, ?, ?)
     `;
 

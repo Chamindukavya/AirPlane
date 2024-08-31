@@ -12,6 +12,9 @@ export default async function Home() {
         
       </p>
       <AirportSearch />
+
+    
+
     </div>
   );
 }

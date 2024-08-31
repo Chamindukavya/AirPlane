@@ -6,15 +6,15 @@ let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
   try {
-    const { airport_code, airport_name, city, state, country } = await request.json();
+    const { flight_Schedule_id, start_time, end_time, aircraft_id, country } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
     const insert_query = `
-      INSERT INTO airlineproject.airports (airport_code, airport_name, city, state, country)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO airlineproject.flight (flight_Schedule_id, start_time, end_time, aircraft_id)
+      VALUES (?, ?, ?, ?)
     `;
 
-    const [results] = await connection.execute(insert_query, [airport_code, airport_name, city, state, country]);
+    const [results] = await connection.execute(insert_query, [flight_Schedule_id, start_time, end_time, aircraft_id]);
 
     connection.end();
     

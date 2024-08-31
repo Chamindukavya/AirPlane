@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     // Create the SQL query to insert data
     const insert_query = `
-      INSERT INTO students.std_profile (std_id, std_name, std_dob, std_address)
+      INSERT INTO airlineproject.std_profile (std_id, std_name, std_dob, std_address)
       VALUES (?, ?, ?, ?)
     `;
 

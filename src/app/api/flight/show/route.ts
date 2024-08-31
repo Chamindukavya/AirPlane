@@ -1,24 +1,24 @@
+// File: /app/api/flightschedule/route.ts
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
 import { GetDBSettings } from '@/sharedCode/common';
 
 let connectionParams = GetDBSettings();
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const { airport_code, airport_name, city, state, country } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
-    const insert_query = `
-      INSERT INTO airlineproject.airports (airport_code, airport_name, city, state, country)
-      VALUES (?, ?, ?, ?, ?)
+    const select_query = `
+      SELECT flight_id, flight_Schedule_id, start_time, end_time, aircraft_id
+      FROM airlineproject.flight
     `;
 
-    const [results] = await connection.execute(insert_query, [airport_code, airport_name, city, state, country]);
+    const [rows] = await connection.execute(select_query);
 
     connection.end();
-    
-    return NextResponse.json({ message: 'Data added successfully', results });
+
+    return NextResponse.json(rows);
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
 
