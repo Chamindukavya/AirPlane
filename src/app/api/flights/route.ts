@@ -15,16 +15,14 @@ export async function GET(request: NextRequest) {
             `SELECT 
                 f.Flight_ID,
                 f.aircraft_id,
-                fs.origin_airport,
-                fs.destination_airport,
                 f.start_time,
                 f.end_time
             FROM 
                 Flight f
             JOIN 
-                FlightSchedule fs ON f.flight_id = fs.flight_id
+                Flight_Schedule fs ON f.flight_schedule_id = fs.flight_schedule_id
             WHERE 
-                fs.origin = ? AND fs.destination = ?`,
+                fs.origin_airport = ? AND fs.destination_airport = ?`,
             [origin, destination]
         );
     

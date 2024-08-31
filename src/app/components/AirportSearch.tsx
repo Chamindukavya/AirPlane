@@ -7,12 +7,12 @@ type Airport = {
 };
 
 type Flight = {
-    flight_number: string;
-    origin: string;
-    destination: string;
-    departure_time: string;
-    arrival_time: string;
-    airline: string;
+    flight_id: number;
+    flight_schedule_id: number;
+    aircraft_id: number;
+    start_time: string;
+    end_time: string;
+    
 };
 
 const AirportSearch: React.FC = () => {
@@ -40,6 +40,7 @@ const AirportSearch: React.FC = () => {
         setIsLoading(true);
         try {
             const response = await fetch(`/api/flights?origin=${origin}&destination=${destination}`);
+            console.log('data received');
             const data: Flight[] = await response.json();
             setFlights(data);
         } catch (error) {
@@ -80,7 +81,6 @@ const AirportSearch: React.FC = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Flight Number</th>
                                 <th>Airline</th>
                                 <th>Departure Time</th>
                                 <th>Arrival Time</th>
@@ -88,11 +88,10 @@ const AirportSearch: React.FC = () => {
                         </thead>
                         <tbody>
                             {flights.map((flight) => (
-                                <tr key={flight.flight_number}>
-                                    <td>{flight.flight_number}</td>
-                                    <td>{flight.airline}</td>
-                                    <td>{flight.departure_time}</td>
-                                    <td>{flight.arrival_time}</td>
+                                <tr key={flight.flight_id}>
+                                    <td>{flight.aircraft_id}</td>
+                                    <td>{flight.start_time}</td>
+                                    <td>{flight.end_time}</td>
                                 </tr>
                             ))}
                         </tbody>
