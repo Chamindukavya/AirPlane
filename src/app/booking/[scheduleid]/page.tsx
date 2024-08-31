@@ -4,18 +4,29 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Passenger = {
+  dob: string;
+  age: string;
+  name: string;
+  seatId: string;
+  passportNum: string;
+  class1: string;
+};
+
 export default function BookingPage() {
   const router = useRouter();
   const { scheduleid } = useParams();
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      window.location.href = "/api/auth/signin?callbackUrl=/ClientMember";
+      router.push("/api/auth/signin?callbackUrl=/ClientMember");
     }
   });
 
   const [noTicket, setNoTicket] = useState(1); // Default to 1 ticket
-  const [passengers, setPassengers] = useState([{ dob: '', age: '', name: '', seatId: '', passportNum: '' }]);
+  const [passengers, setPassengers] = useState<Passenger[]>([
+    { dob: "", age: "", name: "", seatId: "", passportNum: "", class1: "" }
+  ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
@@ -23,13 +34,13 @@ export default function BookingPage() {
     const value = parseInt(e.target.value);
     setNoTicket(value);
 
-    const updatedPassengers = Array(value).fill({}).map((_, i) => (
-      passengers[i] || { dob: '', age: '', name: '', seatId: '', passportNum: '' }
-    ));
+    const updatedPassengers = Array(value)
+      .fill({})
+      .map((_, i) => passengers[i] || { dob: "", age: "", name: "", seatId: "", passportNum: "", class1: "" });
     setPassengers(updatedPassengers);
   };
 
-  const handlePassengerChange = (index: number, field: string, value: string) => {
+  const handlePassengerChange = (index: number, field: keyof Passenger, value: string) => {
     const updatedPassengers = passengers.map((passenger, i) =>
       i === index ? { ...passenger, [field]: value } : passenger
     );
@@ -58,14 +69,13 @@ export default function BookingPage() {
       if (response.ok) {
         const result = await response.json();
         setResponseMessage(result.message || "Booking successful!");
-        //router.push('/showTicket');
+        // router.push('/showTicket');
       } else {
         const error = await response.json();
         setResponseMessage(error.error || "Something went wrong.");
       }
-      
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       setResponseMessage("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false);
@@ -84,7 +94,9 @@ export default function BookingPage() {
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-900">Booking Page</h1>
-        <p className="text-lg mb-4 text-gray-700">flight ID: <span className="font-semibold">{scheduleid}</span></p>
+        <p className="text-lg mb-4 text-gray-700">
+          Flight ID: <span className="font-semibold">{scheduleid}</span>
+        </p>
         <p className="text-lg mb-4 text-gray-700">
           Your name: <span className="font-semibold">{session?.user?.name || "Guest"}</span> <br />
           Your id: <span className="font-semibold">{session?.user?.id || "N/A"}</span>
@@ -92,7 +104,9 @@ export default function BookingPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="no_tickets" className="block text-sm font-medium text-gray-700">Number of Tickets</label>
+            <label htmlFor="no_tickets" className="block text-sm font-medium text-gray-700">
+              Number of Tickets
+            </label>
             <input
               type="number"
               id="no_tickets"
@@ -111,7 +125,7 @@ export default function BookingPage() {
                 <input
                   type="text"
                   value={passenger.name}
-                  onChange={(e) => handlePassengerChange(index, 'name', e.target.value)}
+                  onChange={(e) => handlePassengerChange(index, "name", e.target.value)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -120,7 +134,7 @@ export default function BookingPage() {
                 <input
                   type="date"
                   value={passenger.dob}
-                  onChange={(e) => handlePassengerChange(index, 'dob', e.target.value)}
+                  onChange={(e) => handlePassengerChange(index, "dob", e.target.value)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -129,7 +143,7 @@ export default function BookingPage() {
                 <input
                   type="number"
                   value={passenger.age}
-                  onChange={(e) => handlePassengerChange(index, 'age', e.target.value)}
+                  onChange={(e) => handlePassengerChange(index, "age", e.target.value)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -138,7 +152,7 @@ export default function BookingPage() {
                 <input
                   type="text"
                   value={passenger.seatId}
-                  onChange={(e) => handlePassengerChange(index, 'seatId', e.target.value)}
+                  onChange={(e) => handlePassengerChange(index, "seatId", e.target.value)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -147,9 +161,23 @@ export default function BookingPage() {
                 <input
                   type="text"
                   value={passenger.passportNum}
-                  onChange={(e) => handlePassengerChange(index, 'passportNum', e.target.value)}
+                  onChange={(e) => handlePassengerChange(index, "passportNum", e.target.value)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
+              </div>
+              <div>
+                <label htmlFor={`class-${index}`} className="block text-sm font-medium text-gray-700">
+                  Choose class:
+                </label>
+                <select
+                  id={`class-${index}`}
+                  value={passenger.class1}
+                  onChange={(e) => handlePassengerChange(index, "class1", e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option value="Economy">Economy</option>
+                  <option value="Business">Business</option>
+                </select>
               </div>
             </div>
           ))}
@@ -157,7 +185,9 @@ export default function BookingPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {isSubmitting ? "Submitting..." : "Book Tickets"}
           </button>

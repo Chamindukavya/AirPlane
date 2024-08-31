@@ -23,7 +23,7 @@ const FlightSchedule = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch('/api/getTicket');
+        const response = await fetch('/api/flightschedule');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -40,7 +40,7 @@ const FlightSchedule = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Your Tickets</h1>
+      <h1 className="text-2xl font-bold mb-4">Flight Schedule</h1>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <table className="min-w-full bg-white border border-gray-200">
         <thead>

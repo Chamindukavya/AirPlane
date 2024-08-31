@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
 import { GetDBSettings } from '@/sharedCode/common';
-
 let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
@@ -17,8 +16,9 @@ export async function POST(request: NextRequest) {
     const [results] = await connection.execute(insert_query, [airport_code, airport_name, city, state, country]);
 
     connection.end();
-    
+
     return NextResponse.json({ message: 'Data added successfully', results });
+    
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
 

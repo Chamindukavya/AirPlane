@@ -8,6 +8,7 @@ const Passenger: React.FC = () => {
   const [name, setName] = useState('');
   const [passport, setPassport] = useState('');
   const [dob, setDob] = useState('');
+  const [class1, setClass1] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
