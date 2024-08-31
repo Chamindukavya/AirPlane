@@ -12,7 +12,7 @@ const AddFlight = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const airportData = { flightSchedule_id: scheduleid, start_time, end_time, aircraft_id };
+    const airportData = { flight_Schedule_id: scheduleid, start_time, end_time, aircraft_id };
 
 
     try {

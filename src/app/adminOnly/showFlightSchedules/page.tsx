@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type FlightSchedule = {
-  flightSchedule_id: number;
+  flight_Schedule_id: number;
   date: string;
   origin_airport: string;
   destination_airport: string;
@@ -37,7 +37,7 @@ export default function FlightSchedulePage() {
 
   // Function to handle booking, it will navigate to /booking
   const handleBooking = (schedule: FlightSchedule) => {
-    router.push(`/adminOnly/addFlight/${schedule.flightSchedule_id}`);
+    router.push(`/adminOnly/addFlight/${schedule.flight_Schedule_id}`);
   };
 
   return (
@@ -46,7 +46,7 @@ export default function FlightSchedulePage() {
         <div key={index} className="p-4 border rounded-lg shadow-md">
           <h3 className="text-lg font-semibold">Flight</h3>
           <p>
-            <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
+            <strong>Flight Schedule ID:</strong> {schedule.flight_Schedule_id}
           </p>
          
           <p>

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 type FlightSchedule = {
   flight_id: number;
-  flightSchedule_id: number;
+  flight_Schedule_id: number;
   start_time: string;
   end_time: string;
   aircraft_id: number;
@@ -18,7 +18,7 @@ export default function FlightSchedulePage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/flight/show");
+        const response = await fetch("/api/flights");
         const data: FlightSchedule[] = await response.json();
         setSchedules(data);
         setLoading(false);
@@ -50,7 +50,7 @@ export default function FlightSchedulePage() {
             <strong>Flight ID:</strong> {schedule.flight_id}
           </p>
           <p>
-            <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
+            <strong>Flight Schedule ID:</strong> {schedule.flight_Schedule_id}
           </p>
           <p>
             <strong>Start Time:</strong> {schedule.start_time}
