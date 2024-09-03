@@ -4,14 +4,14 @@ import { GetDBSettings, IDBSettings } from '@/sharedCode/common'
 
 let connectionParams = GetDBSettings()
 
-
 export async function GET(request: Request) {
+
   try {
     
     const connection = await mysql.createConnection(connectionParams)
     let get_exp_query = ''
 
-    get_exp_query = 'SELECT * FROM students.std_profile'
+    get_exp_query = 'SELECT * FROM students.user'
     let values: any[] = []
     const [results] = await connection.execute(get_exp_query, values)
     connection.end()
