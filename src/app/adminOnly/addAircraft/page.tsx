@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const AddAirport = () => {
+const AddAircraft = () => {
   const [model, setModel] = useState("");
   const [capacity, setCapacity] = useState("");
   const [message, setMessage] = useState("");
@@ -72,4 +72,4 @@ const AddAirport = () => {
   );
 };
 
-export default AddAirport;
+export default AddAircraft;
