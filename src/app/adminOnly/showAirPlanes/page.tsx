@@ -40,13 +40,22 @@ export default function FlightSchedulePage() {
     return <div>Loading...</div>;
   }
 
-  // Function to handle booking, it will navigate to /booking
-  const handleBooking = (schedule: FlightSchedule) => {
-    console.log("Booking for schedule", schedule);
-    router.push(`/booking/${schedule.flight_id}`);
-  };
+  const deleteFlight = async (schedule: FlightSchedule) => {
 
-
+    try {
+      const response = await fetch("/api/flight/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ flight_id: schedule.flight_id }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.error("Failed to delete flight", err);
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -83,11 +92,12 @@ export default function FlightSchedulePage() {
           <p>
             <strong>Aircraft ID:</strong> {schedule.aircraft_id}
           </p>
+       
           <button
-            onClick={() => handleBooking(schedule)}
+            onClick={() => deleteFlight(schedule)}
             className="mt-2 bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600"
           >
-            Book
+            delete
           </button>
           
         </div>

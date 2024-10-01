@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     const [results] = await connection.execute(insert_query, [model, capacity]);
 
     connection.end();
+
     
     return NextResponse.json({ message: 'Data added successfully', results });
   } catch (err) {
@@ -30,3 +31,31 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(response, { status: 500 });
   }
 }
+export async function GET(request: NextRequest) {
+ 
+  try {
+    const connection = await mysql.createConnection(connectionParams);
+
+    const select_query = `
+      select * from flight inner join flightschedule using(flightSchedule_id);
+
+    `;
+
+    const [rows] = await connection.execute<any[]>(select_query);
+    connection.end();
+    
+
+    return NextResponse.json(rows);
+  } catch (err) {
+    console.log('ERROR: API - ', (err as Error).message);
+
+    const response = {
+      error: (err as Error).message,
+      returnedStatus: 500,
+    };
+
+    return NextResponse.json(response, { status: 500 });
+  }
+}
+
+
