@@ -20,6 +20,9 @@ export default async function Page() {
       <button className='p-4 border-2 bg-slate-400 hover:bg-slate-200 '>
         <a href="/adminOnly/showFlight">Show Flights</a>
       </button>
+      <button className='p-4 border-2 bg-slate-400 hover:bg-slate-200 '>
+        <a href="/adminOnly/showAirPlanes">Show Air Planes</a>
+      </button>
     </div>
   );
 }

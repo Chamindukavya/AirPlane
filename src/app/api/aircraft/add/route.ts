@@ -6,25 +6,19 @@ let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse the request body to get the data
-    const { std_id, std_name, std_dob, std_address } = await request.json();
-
-    // Connect to the database
+    const { model, capacity, is_available} = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
-    // Create the SQL query to insert data
     const insert_query = `
-      INSERT INTO students.std_profile (std_id, std_name, std_dob, std_address)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO admin_aircraft_view (model, capacity)
+      VALUES (?, ?)
     `;
 
-    // Execute the query with the data
-    const [results] = await connection.execute(insert_query, [std_id, std_name, std_dob, std_address]);
+    const [results] = await connection.execute(insert_query, [model, capacity]);
 
-    // Close the connection when done
     connection.end();
 
-    // Return a success message
+    
     return NextResponse.json({ message: 'Data added successfully', results });
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
@@ -37,3 +31,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(response, { status: 500 });
   }
 }
+
+
+
+

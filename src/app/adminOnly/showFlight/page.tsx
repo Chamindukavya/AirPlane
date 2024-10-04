@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 type FlightSchedule = {
   flight_id: number;
-  flightSchedule_id: number;
+  
   date: string;
   origin_airport: string;
   destination_airport: string;
@@ -13,6 +13,7 @@ type FlightSchedule = {
   start_time: string;
   end_time: string;
   aircraft_id: number;
+  price_platinum: string
 };
 
 export default function FlightSchedulePage() {
@@ -62,15 +63,7 @@ export default function FlightSchedulePage() {
       {schedules.map((schedule, index) => (
         <div key={index} className="p-4 border rounded-lg shadow-md">
           <h3 className="text-lg font-semibold">Flight</h3>
-          <p>
-            <strong>Flight ID:</strong> {schedule.flight_id}
-          </p>
-          <p>
-            <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
-          </p>
-          <p>
-            <strong>Date:</strong> {schedule.date}
-          </p>
+          
           <p>
             <strong>Origin Airport:</strong> {schedule.origin_airport}
           </p>
@@ -78,10 +71,17 @@ export default function FlightSchedulePage() {
             <strong>Destination Airport:</strong> {schedule.destination_airport}
           </p>
           <p>
+            <strong>Date:</strong> {schedule.date}
+          </p>
+          
+          <p>
             <strong>Price (Economy):</strong> ${schedule.price_economy}
           </p>
           <p>
             <strong>Price (Business):</strong> ${schedule.price_business}
+          </p>
+          <p>
+            <strong>Price (Platinum):</strong> ${schedule.price_platinum}
           </p>
           <p>
             <strong>Start Time:</strong> {schedule.start_time}

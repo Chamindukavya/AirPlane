@@ -13,38 +13,37 @@ export async function GET(request: NextRequest) {
   try {
     const connection = await mysql.createConnection(connectionParams);
 
+    // Use the view instead of the original query
     const select_query = `
-      select * from flight inner join flightschedule using(flightSchedule_id);
-
+      SELECT 
+        origin_airport,
+        destination_airport,
+        date,
+        start_time,
+        end_time,
+        price_economy,
+        price_business,
+        price_platinum,
+        flight_id,
+        aircraft_id
+      FROM flight_schedule_view;
     `;
 
     const [rows] = await connection.execute<any[]>(select_query);
+  
 
-   
-    console.log("passenger state:", session?.user?.passenger_state);  
     if (session?.user?.passenger_state === 'frequent') {
-      (rows as any[]).forEach((row: any) => {
-      
+      rows.forEach((row: any) => {
         row.price_economy = row.price_economy - row.price_economy * 0.09;
-        console.log('price_economy:', row.price_economy);
-        
       });
     }
     if (session?.user?.passenger_state === 'golden') {
-      (rows as any[]).forEach((row: any) => {
-      
+      rows.forEach((row: any) => {
         row.price_economy = row.price_economy - row.price_economy * 0.12;
-        console.log('price_economy:', row.price_economy);
-        
       });
     }
-    
-
-   
 
     connection.end();
-    
-
     return NextResponse.json(rows);
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
@@ -56,4 +55,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response, { status: 500 });
   }
+
+
 }

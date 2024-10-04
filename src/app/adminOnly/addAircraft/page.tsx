@@ -12,7 +12,7 @@ const AddAirport = () => {
     const airportData = { model, capacity };
 
     try {
-      const res = await fetch("/api/aircraft", {
+      const res = await fetch("/api/aircraft/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
