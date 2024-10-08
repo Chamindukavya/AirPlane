@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         passenger.name,
         passenger.seatId,
         passenger.passportNum,
-        passenger.class1,
+        "economy",
       ]);
 
       const passenger_id = result2.insertId;

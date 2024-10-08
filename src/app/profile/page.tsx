@@ -16,7 +16,7 @@ export default async function Page() {
         email:  {session?.user?.email} 
       </p>
       <p>
-        Admin Status:  {session?.user?.is_admin==1 ? "Admin" : "Not Admin"} 
+        Admin Status:  {session?.user?.role_name=="user" ? "Admin" : "Not Admin"} 
       </p>
       <p>
         no of bookings:  {session?.user?.no_bookings} 
