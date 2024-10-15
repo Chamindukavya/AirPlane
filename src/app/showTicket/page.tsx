@@ -29,6 +29,7 @@ const FlightSchedule = () => {
         }
         const data = await response.json();
         setTickets(data.rows); // assuming your API returns { rows: [] }
+        console.log("*********",tickets);
       } catch (err) {
         setError('Failed to fetch flight schedule.');
         console.error(err);

@@ -1,3 +1,4 @@
+// File: /app/api/flightschedule/route.ts
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
 import { GetDBSettings } from '@/sharedCode/common';
