@@ -6,19 +6,28 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const path = request.nextUrl.pathname;
 
-  // Check if it's an admin path
-  const isAdminPath = path === '/Admin';
+  const isAdminPath = path === '/Admin' || path === '/adminOnly' 
+                                || path === '/adminOnly/addFlightSchedule' 
+                                || path === '/adminOnly/addAircraft' 
+                                || path === '/adminOnly/addairport'
+                                || path === '/adminOnly/addFlight'
+                                || path === '/adminOnly/addFlightSchedule';
 
-  // If accessing the admin path and no token or user is not an admin, redirect
+ 
   if (isAdminPath) {
     if (!token || token.user_role !== 'admin') {
-      return NextResponse.redirect(new URL('/403', request.url));  // Redirect to a '403 Forbidden' page or home
+      return NextResponse.redirect(new URL('/403', request.url)); 
     }
   }
 
-  return NextResponse.next(); // Allow the request if the user is an admin or the path isn't restricted
+  return NextResponse.next(); 
 }
 
 export const config = {
-  matcher: ['/Admin'], // Restrict access to the admin page
+  matcher: [
+    '/Admin',
+    '/adminOnly' ,
+    '/adminOnly/addFlightSchedule',
+  
+  ], 
 }

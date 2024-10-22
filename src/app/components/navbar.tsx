@@ -43,7 +43,7 @@ const Navbar: React.FC = async () => {
             </Link>
 
             {/* Admin Link - Conditional based on user's role */}
-            {session?.user?.role_name === "user" ? (
+            {session?.user?.role_name === "admin" ? (
               <Link
                 href="/Admin"
                 className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"

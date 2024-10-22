@@ -2,26 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-type Airport = {
-  airport_code: string;
-  airport_name: string;
-};
-
-type Flight = {
-  flight_id: number;
-  flight_schedule_id: number;
-  aircraft_id: number;
-  start_time: string;
-  end_time: string;
-};
-
 const AirportSearch: React.FC = () => {
   const [airports, setAirports] = useState<Airport[]>([]);
   const [origin, setOrigin] = useState<string>(''); 
   const [destination, setDestination] = useState<string>('');
+  const [date, setDate] = useState<string>(''); // New state for date
   const [flights, setFlights] = useState<Flight[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFlightViewOpen, setIsFlightViewOpen] = useState<boolean>(false); // State for flight view visibility
+  const [isFlightViewOpen, setIsFlightViewOpen] = useState<boolean>(false);
   const router = useRouter();
 
   // Fetching the list of airports
@@ -31,44 +19,29 @@ const AirportSearch: React.FC = () => {
         const response = await fetch('/api/airports');
         if (!response.ok) throw new Error('Failed to fetch airports');
         const data: Airport[] = await response.json();
-        console.log('Airports fetched:', data); // Debugging: Ensure data is fetched
         setAirports(data);
       } catch (error) {
         console.error('Error fetching airports:', error);
       }
     };
-
     fetchAirports();
   }, []);
 
-  // Search for flights between selected origin and destination
+  // Search for flights between selected origin, destination, and date
   const handleSearch = async () => {
-    if (!origin || !destination) return; // Prevent search if no origin/destination selected
+    if (!origin || !destination || !date) return; // Check if all fields are filled
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/flights?origin=${origin}&destination=${destination}`);
+      const response = await fetch(`/api/flights?origin=${origin}&destination=${destination}&date=${date}`);
       if (!response.ok) throw new Error('Failed to fetch flights');
       const data: Flight[] = await response.json();
-      console.log('Flights fetched:', data); // Debugging: Ensure flights data is fetched
       setFlights(data);
-      setIsFlightViewOpen(true); // Open flight view when flights are fetched
+      setIsFlightViewOpen(true); 
     } catch (error) {
-      console.error('Error fetching flights:', error); // Catch and log any errors
+      console.error('Error fetching flights:', error);
     } finally {
-      setIsLoading(false); // Ensure loading state is turned off
+      setIsLoading(false);
     }
-  };
-
-  // Redirect to booking page for a specific flight
-  const handleBooking = (schedule: Flight) => {
-    console.log('Booking flight:', schedule.flight_id); // Debugging: Log booking information
-    router.push(`/booking/${schedule.flight_id}`);
-  };
-
-  // Close the flight view
-  const handleCloseFlightView = () => {
-    setIsFlightViewOpen(false);
-    setFlights([]); // Optionally clear the flights when closing
   };
 
   return (
@@ -103,11 +76,19 @@ const AirportSearch: React.FC = () => {
           ))}
         </select>
 
+        {/* New date input field */}
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full sm:w-1/3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
         <button
           onClick={handleSearch}
-          disabled={!origin || !destination || isLoading}
+          disabled={!origin || !destination || !date || isLoading}
           className={`w-full sm:w-1/6 p-3 text-lg text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-            (!origin || !destination || isLoading) ? 'opacity-50 cursor-not-allowed' : ''
+            (!origin || !destination || !date || isLoading) ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           {isLoading ? 'Searching...' : 'Search'}
@@ -115,50 +96,28 @@ const AirportSearch: React.FC = () => {
       </div>
 
       {/* Display flights */}
-      {isFlightViewOpen && (
-        <div className="mt-10 relative"> {/* Added relative positioning */}
-          <button
-            onClick={handleCloseFlightView}
-            className="absolute top-0 right-0 mt-2 mr-2 text-red-500 hover:text-red-700 font-bold" // Positioned at the top right
-          >
+      {isFlightViewOpen && flights.length > 0 && (
+        <div className="mt-10 relative">
+          <button onClick={() => setIsFlightViewOpen(false)} className="absolute top-0 right-0 mt-2 mr-2 text-red-500 hover:text-red-700 font-bold">
             Close
           </button>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Available Flights</h2>
-
-          {flights.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {flights.map((schedule, index) => (
-                <div key={index} className="p-6 border rounded-xl shadow-lg bg-white">
-                  <h3 className="text-xl font-semibold text-gray-700 mb-4">Flight Information</h3>
-                  <p className="text-gray-600">
-                    <strong>Flight ID:</strong> {schedule.flight_id}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Schedule ID:</strong> {schedule.flight_schedule_id}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Start Time:</strong> {schedule.start_time}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>End Time:</strong> {schedule.end_time}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Aircraft:</strong> {schedule.aircraft_id}
-                  </p>
-                  <button
-                    onClick={() => handleBooking(schedule)}
-                    className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-                  >
-                    Book Flight
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            !isLoading && origin && destination && (
-              <p className="text-red-600 mt-6 text-center">No flights found for the selected route.</p>
-            )
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {flights.map((schedule, index) => (
+              <div key={index} className="p-6 border rounded-xl shadow-lg bg-white">
+                <h3 className="text-xl font-semibold text-gray-700 mb-4">Flight Information</h3>
+                <p><strong>Flight ID:</strong> {schedule.flight_id}</p>
+                <p><strong>Start Time:</strong> {schedule.start_time}</p>
+                <p><strong>End Time:</strong> {schedule.end_time}</p>
+                <button
+                  onClick={() => router.push(`/booking/${schedule.flight_id}`)}
+                  className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+                >
+                  Book Flight
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
