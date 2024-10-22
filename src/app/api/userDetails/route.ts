@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const connection = await mysql.createConnection(connectionParams)
     let get_exp_query = ''
 
-    get_exp_query = 'SELECT * FROM students.user'
+    get_exp_query = 'SELECT * FROM user'
     let values: any[] = []
     const [results] = await connection.execute(get_exp_query, values)
     connection.end()

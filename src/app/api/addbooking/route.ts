@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     await connection.beginTransaction();
     const [result]: any = await connection.execute(
       `
-      INSERT INTO students.bookings (flight_id, user_id, no_tickets)
+      INSERT INTO booking (flight_id, user_id, no_tickets)
       VALUES (?, ?, ?)
       `,
       [flight_id, user_id, no_tickets]
@@ -25,12 +25,12 @@ export async function POST(request: NextRequest) {
 
     // Insert passenger details
     const insert_query_passenger = `
-      INSERT INTO students.passenger (booking_id, dob, age, name, seat_id, passport_num)
+      INSERT INTO passenger (booking_id, date_of_birth, age, name, seat_id, passport_num)
       VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const insert_query_ticket = `
-      INSERT INTO students.ticket (passenger_id, class, flight_id)
+      INSERT INTO ticket (passenger_id, class, flight_id)
       VALUES (?, ?, ?)
     `;
 

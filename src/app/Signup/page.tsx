@@ -1,14 +1,14 @@
-'use client';
+"use client";
 // pages/SignUp.tsx
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SignUp: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [dob, setDob] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [date_of_birth, setDob] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
@@ -22,46 +22,59 @@ const SignUp: React.FC = () => {
 
     try {
       // Make a POST request to the registration API
-      const response = await fetch('/api/register', {
-        method: 'POST',
+      const response = await fetch("/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, dob }),
+        body: JSON.stringify({ name, email, password, date_of_birth }),
       });
 
       // Handle the response
       if (response.ok) {
         const result = await response.json();
         setSuccess(result.message);
-        router.push('/Login');
+        router.push("/Login");
       } else {
         const result = await response.json();
-        setError(result.message || 'An error occurred');
+        setError(result.message || "An error occurred");
       }
     } catch (err) {
       console.error(err);
-      setError('An unexpected error occurred');
+      setError("An unexpected error occurred");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="p-4 mb-4 text-red-700 bg-red-100 rounded-md" role="alert">
+            <div
+              className="p-4 mb-4 text-red-700 bg-red-100 rounded-md"
+              role="alert"
+            >
               {error}
             </div>
           )}
           {success && (
-            <div className="p-4 mb-4 text-green-700 bg-green-100 rounded-md" role="alert">
+            <div
+              className="p-4 mb-4 text-green-700 bg-green-100 rounded-md"
+              role="alert"
+            >
               {success}
             </div>
           )}
           <div className="space-y-1">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -72,7 +85,12 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div className="space-y-1">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -83,7 +101,12 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div className="space-y-1">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -94,11 +117,16 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div className="space-y-1">
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700">DoB</label>
+            <label
+              htmlFor="date"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Date of Birth
+            </label>
             <input
               type="date"
               id="date"
-              value={dob}
+              value={date_of_birth}
               onChange={(e) => setDob(e.target.value)}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

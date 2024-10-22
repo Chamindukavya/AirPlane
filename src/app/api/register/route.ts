@@ -9,7 +9,7 @@ import { RowDataPacket } from 'mysql2';
 const connectionParams = GetDBSettings();
 
 export async function POST(req: Request) {
-  const { name, email, password,dob } = await req.json();
+  const { name, email, password,date_of_birth } = await req.json();
 
   if (!name || !email || !password) {
     return new Response(
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     // Check if the user already exists
     const [rows] = await connection.query<RowDataPacket[]>(
-      'SELECT email FROM students.user WHERE email = ?',
+      'SELECT email FROM user WHERE email = ?',
       [email]
     );
     if (rows.length > 0) {
@@ -40,10 +40,10 @@ export async function POST(req: Request) {
 
     // Insert the new user into the database
     const query = `
-      INSERT INTO students.user (user_name, email, password,dob)
+      INSERT INTO user (user_name, email, password,date_of_birth)
       VALUES (?, ?, ?,?)
     `;
-    await connection.query(query, [name, email, hashedPassword,dob]);
+    await connection.query(query, [name, email, hashedPassword,date_of_birth]);
 
     // Close the database connection
     await connection.end();

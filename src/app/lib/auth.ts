@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const [rows] = await connection.execute<RowDataPacket[]>(
-            'SELECT user_id, user_name, email, password, is_admin, no_bookings,dob, passenger_state  FROM user WHERE email = ?',
+            'SELECT user_id, user_name, email, password, date_of_birth, age,user_state, total_no_bookings, role_name  FROM user WHERE email = ?',
             [credentials?.email]
           );
 

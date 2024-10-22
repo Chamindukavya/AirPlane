@@ -7,19 +7,18 @@ let connectionParams = GetDBSettings();
 export async function POST(request: NextRequest) {
   try {
     // Parse the request body to get the data
-    const { std_id, std_name, std_dob, std_address } = await request.json();
-
+    const { user_id, user_name, user_dob, user_email } = await request.json();
+    console.log(user_id, user_name, user_dob, user_email);
     // Connect to the database
     const connection = await mysql.createConnection(connectionParams);
 
     // Create the SQL query to insert data
     const insert_query = `
-      INSERT INTO students.std_profile (std_id, std_name, std_dob, std_address)
-      VALUES (?, ?, ?, ?)
-    `;
+      INSERT INTO user (std_id, std_name, std_dob, std_address)
+      VALUES (?, ?, ?, ?)`;
 
     // Execute the query with the data
-    const [results] = await connection.execute(insert_query, [std_id, std_name, std_dob, std_address]);
+    const [results] = await connection.execute(insert_query, [user_id, user_name, user_dob, user_email]);
 
     // Close the connection when done
     connection.end();

@@ -12,7 +12,7 @@ export interface IDBSettings {
   
   export const GetDBSettings = (): IDBSettings => {
     const env = process.env.NODE_ENV
-  
+  process.env.NE
     if (env == 'development')
       return {
         host: process.env.host_dev!, //'58.84.143.251',

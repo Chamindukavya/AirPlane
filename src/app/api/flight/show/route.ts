@@ -10,8 +10,7 @@ export async function GET(request: NextRequest) {
     const connection = await mysql.createConnection(connectionParams);
 
     const select_query = `
-      SELECT flight_id, flightSchedule_id, start_time, end_time, aircraft_id
-      FROM students.flight
+      SELECT flight_id, flight_shedule_id, start_time, end_time, aircraft_id FROM flight
     `;
 
     const [rows] = await connection.execute(select_query);

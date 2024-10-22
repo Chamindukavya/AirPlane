@@ -7,7 +7,6 @@ type FlightSchedule = {
   date: string;
   origin_airport: string;
   destination_airport: string;
-  
 };
 
 export default function FlightSchedulePage() {
@@ -48,15 +47,17 @@ export default function FlightSchedulePage() {
           <p>
             <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
           </p>
-         
+
           <p>
             <strong>Date:</strong> {schedule.date}
           </p>
           <p>
-            <strong>Origin Air Port:</strong>{schedule.origin_airport}
+            <strong>Origin Air Port:</strong>
+            {schedule.origin_airport}
           </p>
           <p>
-            <strong>Destnation Air Port:</strong>{schedule.destination_airport}
+            <strong>Destnation Air Port:</strong>
+            {schedule.destination_airport}
           </p>
           <button
             onClick={() => handleBooking(schedule)}
