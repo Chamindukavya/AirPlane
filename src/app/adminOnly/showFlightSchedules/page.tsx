@@ -45,9 +45,7 @@ export default function FlightSchedulePage() {
       {schedules.map((schedule, index) => (
         <div key={index} className="p-4 border rounded-lg shadow-md">
           <h3 className="text-lg font-semibold">Flight</h3>
-          <p>
-            <strong>Flight Schedule ID:</strong> {schedule.flightSchedule_id}
-          </p>
+          
          
           <p>
             <strong>Date:</strong> {schedule.date}
