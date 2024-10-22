@@ -1,5 +1,6 @@
 "use client";
 
+import { Ticket } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type Ticket = {
@@ -24,7 +25,7 @@ const TicketComponent = () => {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      console.log("testinggggggggggggggggggggg")
+   
       setLoading(true); // Start loading
       try {
         const response = await fetch("/api/getTicket");
@@ -33,7 +34,7 @@ const TicketComponent = () => {
         }
         const data = await response.json();
         setTickets(data.rows); // Assuming the API returns { rows: [] }
-        console.log("*********", response);
+        
       } catch (err) {
         setError("Failed to fetch tickets.");
         console.error(err);
@@ -41,6 +42,7 @@ const TicketComponent = () => {
         setLoading(false); // End loading
       }
     };
+    console.log("*********", tickets);
 
     fetchTickets();
   }, []);

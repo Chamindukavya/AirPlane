@@ -34,6 +34,7 @@ const FlightSchedule1 = ({ setTicketDetails }: FlightSchedule1Props) => {
           aircraft_id: ticket.aircraft_id,
           origin_airport:ticket.origin_airport,
           destination_airport:ticket.destination_airport,
+          ticket_id:ticket.ticket_id,
 
 
         }));

@@ -35,13 +35,14 @@ const StatsCard = ({ title, value }) => (
 );
 
 // TicketCard component for displaying individual ticket details
-const TicketCard = ({ name, date, startTime, aircraftId, onView }) => (
+const TicketCard = ({ name, date, startTime, aircraftId, onView}) => (
   <div className="p-4 bg-gray-100 rounded-lg shadow-md flex justify-between items-start">
     <div className="flex-grow">
       <h3 className="font-semibold">Name: {name}</h3>
       <p className="text-gray-500">Date: {date}</p>
       <p className="text-gray-500">Start Time: {startTime}</p>
       <p className="text-gray-500">Aircraft ID: {aircraftId}</p>
+      
     </div>
     <button
       onClick={onView}
@@ -132,6 +133,7 @@ export default function DashboardPage() {
                   date={ticket.date}
                   startTime={ticket.start_time}
                   aircraftId={ticket.aircraft_id}
+                 
                   onView={() => handleViewTicket(ticket)} // Pass ticket to view
                 />
               ))
