@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
 
  
   if (isAdminPath) {
-    if (!token || token.user_role !== 'admin') {
+    if (!token || token.role_name !== 'admin') {
       return NextResponse.redirect(new URL('/403', request.url)); 
     }
   }
