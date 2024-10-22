@@ -58,7 +58,7 @@ const AirportSearch: React.FC = () => {
           <option value="">Select Origin Airport</option>
           {airports.map((airport) => (
             <option key={airport.airport_code} value={airport.airport_code}>
-              {airport.airport_name} ({airport.airport_code})
+              {airport.airport_name}
             </option>
           ))}
         </select>
@@ -71,7 +71,7 @@ const AirportSearch: React.FC = () => {
           <option value="">Select Destination Airport</option>
           {airports.map((airport) => (
             <option key={airport.airport_code} value={airport.airport_code}>
-              {airport.airport_name} ({airport.airport_code})
+              {airport.airport_name}
             </option>
           ))}
         </select>
