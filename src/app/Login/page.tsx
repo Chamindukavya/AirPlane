@@ -38,7 +38,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Left Side: Image and Text */}
-      <div className="w-1/2 bg-cover bg-center hidden md:flex flex-col" style={{ backgroundImage: "url('login.jpg')" }}>
+      <div className="w-1/2 bg-cover bg-center md:flex flex-col" style={{ backgroundImage: "url('login.jpg')" }}>
         <div className="flex flex-col items-start p-10 bg-black bg-opacity-40">
           {/* Move the text to the top of the left-hand side box */}
           <div className="text-white">
