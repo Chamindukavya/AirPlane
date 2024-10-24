@@ -10,11 +10,11 @@ export async function POST(request: NextRequest) {
 
       // Fetch the next immediate flight for the given flight_id
       const [flightDetails] :any[] = await connection.execute(
-        `SELECT flight_id,model, date, state ,passenger_count FROM 
+        `SELECT flight_id,model, date, state , passenger_count FROM 
 flightschedule JOIN flight using(flightSchedule_id) 
 join aircrafts using(aircraft_id) join flight_passenger_count using(flight_id)
 where origin_airport= ? AND destination_airport=?;`,
-        [origin, destination]
+        [origin,destination]
       );
       console.log(flightDetails);
       return NextResponse.json({

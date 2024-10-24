@@ -16,6 +16,8 @@ import PlacePicker from "@/app/components/PlacePicker";
 import BookingInputs from "@/app/components/BookingInputs";
 import { Button } from "@/components/ui/button";
 import DataTable from "@/app/components/DataTable";
+// import DestinationTable from "@/app/components/DestinationTable";
+import { toDate } from "date-fns";
 interface Passenger {
   month: string;
   desktop: number;
@@ -29,11 +31,11 @@ export default function Component() {
   const [report, setReport] = useState<number | null>(0);
   useEffect(() => {
     // Fetch initial data on mount
-    fetchDataA();
+    fetchData();
   }, []);
 
   // Function to fetch graph data based on the selected route
-  async function fetchDataA(route?: string) {
+  async function fetchData(route?: string) {
     try {
       const response = await fetch(
         `/api/getMonthPassenger${route ? `?route=${route}` : ""}`
@@ -58,8 +60,6 @@ export default function Component() {
     } else {
       console.log("No route selected.");
     }
-    // setSelectedRoute(routeId); // Store selected route from the form
-    // fetchDataA(route); // Fetch new data based on the route
   };
 
   const handleSelect = (selectId: number | null) => {
@@ -70,20 +70,12 @@ export default function Component() {
   return (
     <div>
       <ResizablePanelGroup
-        direction="horizontal"
+        direction="vertical"
         className="rounded-lg border md:min-w-[450px] w-fit h-full"
       >
         <ResizablePanel defaultSize={500}>
           <div className="flex h-full items-center justify-center p-6">
             <div className="w-full h-full">
-              <DataTable />
-            </div>
-          </div>
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel defaultSize={400}>
-          <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={50}>
               <TopNavBar onSelect={handleSelect} />
               <div className="flex h-full items-center justify-center p-6">
                 <span className="font-semibold">
@@ -113,6 +105,15 @@ export default function Component() {
                   )}
                 </span>
               </div>
+            </div>
+          </div>
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel defaultSize={400}>
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={50}>
+              {/* <DestinationTable fromDate="2022-01-01" toDate="2024-12-31" /> */}
+              {/* <DataTable /> */}
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={85}>
