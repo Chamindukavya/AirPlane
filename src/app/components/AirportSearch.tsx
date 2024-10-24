@@ -1,16 +1,26 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';  // Import useSession
 
 const AirportSearch: React.FC = () => {
+  const { data: session, status } = useSession();  // Get session and status
+  const router = useRouter();
   const [airports, setAirports] = useState<Airport[]>([]);
   const [origin, setOrigin] = useState<string>(''); 
   const [destination, setDestination] = useState<string>('');
-  const [date, setDate] = useState<string>(''); // New state for date
+  const [date, setDate] = useState<string>(''); 
   const [flights, setFlights] = useState<Flight[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFlightViewOpen, setIsFlightViewOpen] = useState<boolean>(false);
-  const router = useRouter();
+
+  // Redirect to login page if the user is not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      console.log('***********',status)
+      router.push('/api/auth/signin'); // Redirect to NextAuth sign-in page
+    }
+  }, [status, router]);
 
   // Fetching the list of airports
   useEffect(() => {
@@ -29,7 +39,7 @@ const AirportSearch: React.FC = () => {
 
   // Search for flights between selected origin, destination, and date
   const handleSearch = async () => {
-    if (!origin || !destination || !date) return; // Check if all fields are filled
+    if (!origin || !destination || !date) return;
     setIsLoading(true);
     try {
       const response = await fetch(`/api/flights?origin=${origin}&destination=${destination}&date=${date}`);
@@ -44,11 +54,17 @@ const AirportSearch: React.FC = () => {
     }
   };
 
+  // If session is still loading, you can display a loading message
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  // Render the search form and flight results
   return (
     <div className="p-10 bg-gray-50 rounded-xl shadow-2xl max-w-5xl mx-auto my-12">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Search a Flight</h1>
-      
-      {/* Search form */} 
+
+      {/* Search form */}
       <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <select
           value={origin}
@@ -76,7 +92,6 @@ const AirportSearch: React.FC = () => {
           ))}
         </select>
 
-        {/* New date input field */}
         <input
           type="date"
           value={date}
