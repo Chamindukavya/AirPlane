@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const [results] = await connection.execute(insert_query, [name, dob,passport]);
+    console.log(results)
 
     connection.end();
     
