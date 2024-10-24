@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     // Insert booking data
     const [result]: any = await connection.execute(
       `
-      INSERT INTO students.bookings (flight_id, user_id, no_tickets)
+      INSERT INTO booking (flight_id, user_id, no_tickets)
       VALUES (?, ?, ?)
       `,
       [flight_id, user_id, no_tickets]
