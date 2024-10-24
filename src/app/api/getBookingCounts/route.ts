@@ -11,9 +11,9 @@ export async function POST(request: NextRequest) {
       // Fetch the next immediate flight for the given flight_id
       const [passengerCounts]: any[] = await connection.execute(
         `SELECT 
-            COUNT(CASE WHEN user_state = 'frequent' THEN user_id END) AS frequent_count,
-            COUNT(CASE WHEN user_state = 'gold' THEN user_id END) AS gold_count
-         FROM booking
+            COUNT(CASE WHEN passenger_state = 'frequent' THEN user_id END) AS frequent_count,
+            COUNT(CASE WHEN passenger_state = 'golden' THEN user_id END) AS gold_count
+         FROM bookings
          JOIN user USING(user_id)
          JOIN flight_details USING(flight_id)
          WHERE date BETWEEN ? AND ?;`,

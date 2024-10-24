@@ -9,14 +9,14 @@ interface passengers {
 
 export async function POST(request: NextRequest) {
     try {
-      const { flightschedule_id } = await request.json();
-      console.log(flightschedule_id)
+      const { flightSchedule_id } = await request.json();
+      console.log(flightSchedule_id)
       const connection = await mysql.createConnection(connectionParams);
 
       // Fetch the next immediate flight for the given flight_id
       const [flight] :any[] = await connection.execute(
         `SELECT get_next_flight(?) as flight_id;`,
-        [flightschedule_id]
+        [flightSchedule_id]
       );
       console.log(flight);
       if (flight.length === 0) {
