@@ -44,7 +44,8 @@ export async function GET(request: NextRequest) {
         INNER JOIN flightschedule AS fs ON f.flightSchedule_id = fs.flightSchedule_id
       WHERE 
         b.user_id = ?
-        AND fs.date >= ?;  -- Filtering for today or future dates
+        AND fs.date >= ?
+        AND t.status = 1;  -- Filtering for today or future dates
     `;
 
     const [rows]: any[] = await connection.execute(select_query, [user_id, today]);

@@ -7,7 +7,7 @@ let connectionParams = GetDBSettings();
 export async function POST(request: NextRequest) {
   try {
     const { ticket_id } = await request.json(); // Get the ticket_id from the request body
-    console.log("***********",ticket_id)
+  
 
     const connection = await mysql.createConnection(connectionParams);
 
