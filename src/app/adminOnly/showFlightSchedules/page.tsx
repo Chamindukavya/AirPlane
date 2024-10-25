@@ -21,6 +21,7 @@ export default function FlightSchedulePage() {
         const response = await fetch("/api/flightSchedule/show");
         const data: FlightSchedule[] = await response.json();
         setSchedules(data);
+        console.log("data", data);
         setLoading(false);
       } catch (err) {
         console.error("Failed to fetch data", err);
@@ -37,6 +38,7 @@ export default function FlightSchedulePage() {
 
   // Function to handle booking, it will navigate to /booking
   const handleBooking = (schedule: FlightSchedule) => {
+    console.log("schedule", schedule);
     router.push(`/adminOnly/addFlight/${schedule.flightSchedule_id}`);
   };
 

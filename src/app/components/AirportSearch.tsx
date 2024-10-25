@@ -1,10 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';  // Import useSession
+import { useSession } from 'next-auth/react';
 
 const AirportSearch: React.FC = () => {
-  const { data: session, status } = useSession();  // Get session and status
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [airports, setAirports] = useState<Airport[]>([]);
   const [origin, setOrigin] = useState<string>(''); 
@@ -14,13 +14,7 @@ const AirportSearch: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFlightViewOpen, setIsFlightViewOpen] = useState<boolean>(false);
 
-  // Redirect to login page if the user is not authenticated
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      console.log('***********',status)
-      router.push('/api/auth/signin'); // Redirect to NextAuth sign-in page
-    }
-  }, [status, router]);
+ 
 
   // Fetching the list of airports
   useEffect(() => {
@@ -45,6 +39,7 @@ const AirportSearch: React.FC = () => {
       const response = await fetch(`/api/flights?origin=${origin}&destination=${destination}&date=${date}`);
       if (!response.ok) throw new Error('Failed to fetch flights');
       const data: Flight[] = await response.json();
+      
       setFlights(data);
       setIsFlightViewOpen(true); 
     } catch (error) {
@@ -54,10 +49,13 @@ const AirportSearch: React.FC = () => {
     }
   };
 
-  // If session is still loading, you can display a loading message
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
+  // Booking function that navigates to the booking page for the selected flight
+  const book = (flight_id: string) => {
+    if (status === 'unauthenticated') {
+          router.push('/api/auth/signin'); // Redirect to NextAuth sign-in page
+       }
+    router.push(`/booking/${flight_id}`);
+  };
 
   // Render the search form and flight results
   return (
@@ -124,8 +122,12 @@ const AirportSearch: React.FC = () => {
                 <p><strong>Flight ID:</strong> {schedule.flight_id}</p>
                 <p><strong>Start Time:</strong> {schedule.start_time}</p>
                 <p><strong>End Time:</strong> {schedule.end_time}</p>
+                <p><strong>Price Economy:</strong> {schedule.price_economy}</p>
+                <p><strong>Price Business:</strong> {schedule.price_business}</p>
+
+                <p><strong>Price Platinum:</strong> {schedule.price_platinum}</p>
                 <button
-                  onClick={() => router.push(`/booking/${schedule.flight_id}`)}
+                  onClick={() => book(schedule.flight_id)} // Pass flight_id to the book function
                   className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
                 >
                   Book Flight

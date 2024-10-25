@@ -20,8 +20,12 @@ export async function GET(request: NextRequest) {
                 f.flight_id,  
                 f.flightSchedule_id,
                 f.aircraft_id,
+                
                 f.start_time,
-                f.end_time
+                f.end_time,
+                fs.price_economy,
+                fs.price_business,
+                fs.price_platinum
             FROM 
                 flight f
             JOIN 

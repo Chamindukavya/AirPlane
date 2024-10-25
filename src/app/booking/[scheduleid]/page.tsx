@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+
 function SeatSelection({
   onSelectSeat,
   selectedSeats,
@@ -193,6 +194,7 @@ export default function BookingPage() {
       if (response.ok) {
         const result = await response.json();
         setResponseMessage(result.message || "Booking successful!");
+        router.push("/profile");
       } else {
         const error = await response.json();
         setResponseMessage(error.error || "Something went wrong.");
@@ -384,6 +386,8 @@ export default function BookingPage() {
             } text-white font-semibold py-2 rounded-md transition duration-300 ease-in-out`}
           >
             {isSubmitting ? "Submitting..." : "Confirm Booking"}
+           
+          
           </button>
 
           {responseMessage && (
