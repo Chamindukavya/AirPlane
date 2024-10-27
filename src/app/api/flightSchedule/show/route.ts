@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const connection = await mysql.createConnection(connectionParams);
 
     const select_query = `
-      SELECT date, origin_airport, destination_airport, price_economy, price_business , flightSchedule_id
+      SELECT date, origin_airport_name, destination_airport_name, price_economy, price_business , flightSchedule_id
       FROM admin_flightschedule_view
     `;
 

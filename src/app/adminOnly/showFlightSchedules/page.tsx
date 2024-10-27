@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 type FlightSchedule = {
   flightSchedule_id: number;
   date: string;
-  origin_airport: string;
-  destination_airport: string;
+  origin_airport_name: string;
+  destination_airport_name: string;
   
 };
 
@@ -53,10 +53,10 @@ export default function FlightSchedulePage() {
             <strong>Date:</strong> {schedule.date}
           </p>
           <p>
-            <strong>Origin Air Port:</strong>{schedule.origin_airport}
+            <strong>Origin Air Port:</strong>{schedule.origin_airport_name}
           </p>
           <p>
-            <strong>Destnation Air Port:</strong>{schedule.destination_airport}
+            <strong>Destnation Air Port:</strong>{schedule.destination_airport_name}
           </p>
           <button
             onClick={() => handleBooking(schedule)}
