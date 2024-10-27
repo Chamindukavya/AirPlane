@@ -10,106 +10,21 @@ export async function POST(request: NextRequest) {
   try {
     const { flight_id, user_id, no_tickets, passengerDetails } = await request.json();
 
-
     // Establish a new connection using connection parameters
     connection = await mysql.createConnection(connectionParams);
 
-    // Start a transaction
-    await connection.beginTransaction();
-
-    // Insert booking data
+    // Call the stored procedure and pass the parameters
     const [result]: any = await connection.execute(
-      `
-      INSERT INTO students.bookings (flight_id, user_id, no_tickets)
-      VALUES (?, ?, ?)
-      `,
-      [flight_id, user_id, no_tickets]
+      'CALL AddBooking(?, ?, ?, ?)',
+      [flight_id, user_id, no_tickets, JSON.stringify(passengerDetails)]
     );
 
-    // Fetch the booking_id of the newly added booking
-    const booking_id = result.insertId;
-    console.log('booking_id: ', booking_id);
-
-    // Insert passenger details
-    const insert_query_passenger = `
-      INSERT INTO students.passenger (booking_id, dob, age, name, seat_id, passport_num, class)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    const insert_query_ticket = `
-      INSERT INTO students.ticket (passenger_id, flight_id)
-      VALUES (?, ?)
-    `;
-
-    for (const passenger of passengerDetails) {
-      const [result2]: any = await connection.execute(insert_query_passenger, [
-        booking_id,
-        passenger.dob,
-        passenger.age,
-        passenger.name,
-        passenger.seatId,
-        passenger.passportNum,
-        "economy",
-      ]);
-
-      const passenger_id = result2.insertId;
-      await connection.execute(insert_query_ticket, [passenger_id, flight_id]);
-    }
-
-    // Update no_bookings column in the user table
-    await connection.execute(
-      `
-      UPDATE students.user
-      SET no_bookings = no_bookings + ?
-      WHERE user_id = ?
-      `,
-      [no_tickets, user_id]
-    );
-
-
-    const [result1]: any = await connection.execute(
-      `
-      select no_bookings from students.user where user_id = ?
-      `,
-      [user_id]
-    );
-
-    let bookings =  result1[0].no_bookings;
-
-    if (bookings >= 5) {
-      await connection.execute(
-        `
-        UPDATE students.user
-        SET passenger_state = ?
-        WHERE user_id = ?
-        `,
-        ["frequent", user_id]
-      );
-  
-    } 
-    if (bookings >= 10) {
-      await connection.execute(
-        `
-        UPDATE students.user
-        SET passenger_state = ?
-        WHERE user_id = ?
-        `,
-        ["golden", user_id]
-      );
-  
-    }
-
-    // Commit the transaction
-    await connection.commit();
+    // Assuming the first row of the first result set contains the booking_id
+    const booking_id = result[0][0].booking_id;
 
     return NextResponse.json({ message: 'Data added successfully', booking_id });
   } catch (err) {
     console.error('ERROR: API - ', (err as Error).message);
-
-    // If an error occurs, roll back the transaction
-    if (connection) {
-      await connection.rollback();
-    }
 
     return NextResponse.json(
       {

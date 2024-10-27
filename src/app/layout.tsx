@@ -13,12 +13,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <AuthProvider>
+          <Navbar />
+          {children}
         <AuthProvider>
           <Navbar />
           {children}

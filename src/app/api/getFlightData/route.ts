@@ -5,20 +5,20 @@ let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
     try {
-      const { fromDate, toDate, destinationAirport } = await request.json();
+      const { origin, destination } = await request.json();
       const connection = await mysql.createConnection(connectionParams);
 
       // Fetch the next immediate flight for the given flight_id
-      const [passengerCount] :any[] = await connection.execute(
-        `SELECT count(passenger_id) AS num_of_passengers
-            FROM passenger join booking using(booking_id) 
-            join flight_details using(flight_id) 
-            where date between ? AND ? AND destination_airport = ?;`,
-        [fromDate, toDate, destinationAirport]
+      const [flightDetails] :any[] = await connection.execute(
+        `SELECT flight_id,model, date, state , passenger_count FROM 
+flightschedule JOIN flight using(flightSchedule_id) 
+join aircrafts using(aircraft_id) join flight_passenger_count using(flight_id)
+where origin_airport= ? AND destination_airport=?;`,
+        [origin,destination]
       );
-      console.log(passengerCount);
+      console.log(flightDetails);
       return NextResponse.json({
-        passengerCount: passengerCount
+        flightDetails : flightDetails
       });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);

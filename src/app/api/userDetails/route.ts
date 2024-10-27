@@ -1,30 +1,30 @@
-import { NextResponse, NextRequest } from 'next/server'
-import mysql from 'mysql2/promise'
-import { GetDBSettings, IDBSettings } from '@/sharedCode/common'
+// File: /app/api/users/route.ts
+import { NextResponse, NextRequest } from 'next/server';
+import mysql from 'mysql2/promise';
+import { GetDBSettings } from '@/sharedCode/common';
 
-let connectionParams = GetDBSettings()
+const connectionParams = GetDBSettings();
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
+  let connection;
 
   try {
+    connection = await mysql.createConnection(connectionParams);
     
-    const connection = await mysql.createConnection(connectionParams)
-    let get_exp_query = ''
+    // Call the stored procedure to get all users
+    const [results]: any[] = await connection.execute('CALL GetAllUsers();');
 
-    get_exp_query = 'SELECT * FROM students.user'
-    let values: any[] = []
-    const [results] = await connection.execute(get_exp_query, values)
-    connection.end()
-    return NextResponse.json(results)
+    return NextResponse.json(results);
   } catch (err) {
-    console.log('ERROR: API - ', (err as Error).message)
+    console.error('ERROR: API - ', (err as Error).message);
 
-    const response = {
+    return NextResponse.json({
       error: (err as Error).message,
-
-      returnedStatus: 200,
+      returnedStatus: 500,
+    }, { status: 500 });
+  } finally {
+    if (connection) {
+      await connection.end();
     }
-
-    return NextResponse.json(response, { status: 200 })
   }
 }

@@ -4,8 +4,8 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
@@ -25,11 +25,11 @@ const Login: React.FC = () => {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        window.location.href = '/'; // Redirect to home or a protected page
+        window.location.href = "/"; // Redirect to home or a protected page
       }
     } catch (err) {
-      console.error('Login error:', err);
-      setError('An unexpected error occurred');
+      console.error("Login error:", err);
+      setError("An unexpected error occurred");
     } finally {
       setLoading(false);
     }
