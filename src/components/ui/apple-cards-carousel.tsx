@@ -6,12 +6,12 @@ import React, {
   createContext,
   useContext,
 } from "react";
-import { ArrowLeft, ArrowRight, X } from "lucide-react"; // from shadcn ui's icon set
+import { ArrowLeft, ArrowRight, X } from "lucide-react"; // Lucide icons
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/app/hooks/use-outside-click";
-import { Button } from "@/components/ui/button"; // import Button from shadcn UI
+import { Button } from "@/components/ui/button"; // shadcn UI Button component
 
 interface CarouselProps {
   items: JSX.Element[];
