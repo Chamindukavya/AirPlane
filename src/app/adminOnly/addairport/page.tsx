@@ -4,15 +4,13 @@ import { useState } from "react";
 const AddAirport = () => {
   const [airport_code, setAirport_code] = useState("");
   const [airport_name, setAirport_name] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
+  const [location_id, setLocation_id] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const airportData = { airport_code, airport_name, city, state, country };
+    const airportData = { airport_code, airport_name, location_id };
 
     try {
       const res = await fetch("/api/addairport", {
@@ -29,9 +27,8 @@ const AddAirport = () => {
         setMessage("Airport added successfully");
         setAirport_code("");
         setAirport_name("");
-        setCity("");
-        setState("");
-        setCountry("");
+        setLocation_id("");
+        
       } else {
         setMessage(`Error: ${result.error}`);
       }
@@ -65,36 +62,18 @@ const AddAirport = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">City:</label>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+          
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">State:</label>
             <input
               type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={location_id}
+              onChange={(e) => setLocation_id(e.target.value)}
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Country:</label>
-            <input
-              type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+          
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
@@ -109,3 +88,4 @@ const AddAirport = () => {
 };
 
 export default AddAirport;
+

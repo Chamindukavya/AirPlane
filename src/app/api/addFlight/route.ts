@@ -20,7 +20,7 @@ export async function POST(request : NextRequest) {
   
   // Schedule the flight
   await connection.query(
-    'INSERT INTO flight ( Flight_ID, Flight_schedule_id, start_time, end_time, aircraft_id) VALUES (?, ?, ?,?,?)',
+    'INSERT INTO flight ( Flight_ID, FlightSchedule_id, start_time, end_time, aircraft_id) VALUES (?, ?, ?,?,?)',
     [ Flight_ID, Flight_schedule_id, start_time, end_time, aircraft_id]
   );
   

@@ -1,52 +1,29 @@
-// File: /app/api/flightschedule/route.ts
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
 import { GetDBSettings } from '@/sharedCode/common';
 import { getServerSession } from "next-auth";
 import { authOptions } from '@/app/lib/auth';
 
-
-let connectionParams = GetDBSettings();
+const connectionParams = GetDBSettings();
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
+  if (!userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const connection = await mysql.createConnection(connectionParams);
 
-    // Use the view instead of the original query
-    const select_query = `
-      SELECT 
-        origin_airport,
-        destination_airport,
-        date,
-        start_time,
-        end_time,
-        price_economy,
-        price_business,
-        price_platinum,
-        flight_id,
-        aircraft_id
-      FROM flight_schedule_view;
-    `;
-
-    const [rows] = await connection.execute<any[]>(select_query);
-  
-
-    if (session?.user?.passenger_state === 'frequent') {
-      rows.forEach((row: any) => {
-        row.price_economy = row.price_economy - row.price_economy * 0.09;
-      });
-    }
-    if (session?.user?.passenger_state === 'golden') {
-      rows.forEach((row: any) => {
-        row.price_economy = row.price_economy - row.price_economy * 0.12;
-      });
-    }
+    // Call the stored procedure with the user ID to get discounted prices
+    const [rows] = await connection.execute<any[]>(`CALL get_flight_schedule_with_dynamic_discounts(?)`, [userId]);
 
     connection.end();
-    return NextResponse.json(rows);
+    return NextResponse.json(rows[0]);  // Access the first result set
   } catch (err) {
-    console.log('ERROR: API - ', (err as Error).message);
+    console.error('ERROR: API - ', (err as Error).message);
 
     const response = {
       error: (err as Error).message,
@@ -55,6 +32,4 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response, { status: 500 });
   }
-
-
 }
