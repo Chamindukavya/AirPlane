@@ -13,7 +13,7 @@ export default function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(/wp.jpg)`,
+            backgroundImage: `url(/home3.jpg)`,
           }}
         />
 
