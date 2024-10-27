@@ -15,17 +15,14 @@ export async function GET(request: NextRequest) {
     try {
         const connection = await mysql.createConnection(connectionParams);
 
-        // Query to get the aircraft capacity
-        const [rows] = await connection.execute(
-            'SELECT capacity FROM aircrafts WHERE aircraft_id = (SELECT aircraft_id FROM flight WHERE flight_id = ?)',
-            [scheduleid]
-        );
-        
+        // Call the stored procedure to get aircraft capacity
+        const [rows] = await connection.execute('CALL GetAircraftCapacity(?)', [scheduleid]);
+
         await connection.end();
 
         // Ensure you are returning a single capacity value
-        if (rows.length > 0) {
-            const capacity = rows[0].capacity; // Access the capacity from the first row
+        if (rows[0].length > 0) {
+            const capacity = rows[0][0].capacity; // Access the capacity from the first row
             return NextResponse.json({ capacity });
         } else {
             return NextResponse.json({ error: 'No capacity found for the given scheduleid' }, { status: 404 });
@@ -36,3 +33,4 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
     }
 }
+

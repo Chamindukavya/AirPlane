@@ -6,19 +6,14 @@ let connectionParams = GetDBSettings();
 
 export async function POST(request: NextRequest) {
   try {
-    const { model, capacity, is_available} = await request.json();
+    const { model, capacity } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
-    const insert_query = `
-      INSERT INTO admin_aircraft_view (model, capacity)
-      VALUES (?, ?)
-    `;
-
-    const [results] = await connection.execute(insert_query, [model, capacity]);
+    // Call the stored procedure
+    const [results] = await connection.execute('CALL AddAircraft(?, ?)', [model, capacity]);
 
     connection.end();
 
-    
     return NextResponse.json({ message: 'Data added successfully', results });
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
@@ -31,7 +26,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(response, { status: 500 });
   }
 }
-
-
-
-

@@ -4,21 +4,15 @@ import { GetDBSettings } from '@/sharedCode/common';
 
 let connectionParams = GetDBSettings();
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const { model, capacity, is_available} = await request.json();
     const connection = await mysql.createConnection(connectionParams);
 
-    const insert_query = `
-      INSERT INTO students.aircrafts (model, capacity)
-      VALUES (?, ?)
-    `;
-
-    const [results] = await connection.execute(insert_query, [model, capacity]);
-
+    // Call the stored procedure
+    const [rows] = await connection.execute('CALL GetAllAircrafts()');
     connection.end();
-    
-    return NextResponse.json({ message: 'Data added successfully', results });
+
+    return NextResponse.json(rows[0]); // rows[0] will contain the result set
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
 
