@@ -3,8 +3,7 @@ import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-//import "./styles.css";
-import DatePicker from "react-datepicker";
+import "./styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaPlaneDeparture } from "react-icons/fa";
 
@@ -219,12 +218,10 @@ export default function BookingPage() {
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{
-        minHeight: "calc(100vh - 64px)",
-        backgroundColor: "#21201e",
-        //backgroundImage: "url('/flight.jpg')",
+        background:"black",
       }}
     >
-      <div className="w-full max-w-4xl p-6 sm:p-10 bg-black bg-opacity-70 rounded-xl shadow-lg">
+      <div className="w-full max-w-4xl p-6 sm:p-10 bg-gray bg-opacity-70 rounded-xl shadow-lg">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white flex items-center justify-center space-x-3">
             <FaPlaneDeparture className="text-blue-500" />
@@ -315,24 +312,13 @@ export default function BookingPage() {
                   >
                     Date of Birth
                   </label>
-                  <DatePicker
-                    selected={
-                      passenger.dob ? new Date(passenger.dob) : null
-                    }
-                    onChange={(date) =>
-                      handlePassengerChange(
-                        index,
-                        "dob",
-                        date.toISOString().split("T")[0]
-                      )
-                    }
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Select Date"
-                    className="mt-2 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
+                  <input
+                  type="date"
+                  value={passenger.dob}
+                  onChange={(e) => handlePassengerChange(index, "dob", e.target.value)}
+                  className="mt-2 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                />
                 </div>
-
                 <div>
                   <label
                     htmlFor={`passport-${index}`}
@@ -355,13 +341,21 @@ export default function BookingPage() {
                     required
                   />
                 </div>
-
+                <div>
+                <label className="block text-sm font-medium">Age</label>
+                <input
+                  type="number"
+                  value={passenger.age}
+                  onChange={(e) => handlePassengerChange(index, "age", e.target.value)}
+                  className="mt-2 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
                 <div>
                   <label
                     htmlFor={`seat-${index}`}
                     className="block text-sm font-medium"
                   >
-                    Seat
+                    Seat ID
                   </label>
                   <input
                     type="text"
