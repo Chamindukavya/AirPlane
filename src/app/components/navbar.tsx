@@ -29,7 +29,7 @@ const Navbar: React.FC = async () => {
 
             {/* Tickets Link */}
             <Link
-              href="/booking"
+              href="/airportsearch"
               className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
             >
               Book
