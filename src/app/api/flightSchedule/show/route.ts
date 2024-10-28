@@ -17,6 +17,8 @@ export async function GET(request: NextRequest) {
     const [rows] = await connection.execute(select_query);
     console.log(rows);
 
+    console.log(rows);
+
     connection.end();
 
     return NextResponse.json(rows);
