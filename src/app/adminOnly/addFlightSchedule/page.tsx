@@ -7,12 +7,13 @@ const AddFlightSchedule = () => {
   const [destination_airport, setDestination_airport] = useState("");
   const [price_economy, setPrice_economy] = useState("");
   const [price_business, setPrice_business] = useState("");
+  const [price_platinum, setPrice_platinum] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const airportData = { date, origin_airport, destination_airport, price_economy, price_business };
+    const airportData = { date, origin_airport, destination_airport, price_economy, price_business, price_platinum };
 
     try {
       const res = await fetch("/api/flightSchedule/add", {
@@ -32,6 +33,7 @@ const AddFlightSchedule = () => {
         setDestination_airport("");
         setPrice_economy("");
         setPrice_business("");
+        setPrice_platinum("");
       } else {
         setMessage(`Error: ${result.error}`);
       }
@@ -92,6 +94,16 @@ const AddFlightSchedule = () => {
                 type="number"
                 value={price_business}
                 onChange={(e) => setPrice_business(e.target.value)}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-800 font-medium mb-2">Platinum Price:</label>
+              <input
+                type="number"
+                value={price_platinum}
+                onChange={(e) => setPrice_platinum(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
