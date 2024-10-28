@@ -154,6 +154,7 @@ export default function BookingPage() {
           setResponseMessage("");
           
         }
+        router.push("/profile");
   
         console.log("Response:", response);
       } catch (error) {
