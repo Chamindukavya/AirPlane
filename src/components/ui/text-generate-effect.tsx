@@ -60,5 +60,6 @@ export const TextGenerateEffect = ({
         </div>
       </div>
     </div>
+    </div>
   );
 };
