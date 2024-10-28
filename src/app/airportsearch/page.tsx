@@ -16,6 +16,7 @@ type Flight = {
 };
 
 const AirportSearch: React.FC = () => {
+  const [date, setDate] = useState<string>(''); 
   const [airports, setAirports] = useState<Airport[]>([]);
   const [origin, setOrigin] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
@@ -46,7 +47,7 @@ const AirportSearch: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `/api/flights?origin=${origin}&destination=${destination}`
+        `/api/flights?origin=${origin}&destination=${destination}&date=${date}`
       );
       if (!response.ok) throw new Error("Failed to fetch flights");
       const data: Flight[] = await response.json();
@@ -104,6 +105,13 @@ const AirportSearch: React.FC = () => {
               </option>
             ))}
           </select>
+
+          <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full sm:w-1/3 p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
           <button
             onClick={handleSearch}
