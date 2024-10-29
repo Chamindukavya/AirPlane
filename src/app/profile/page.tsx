@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import FlightSchedule1 from "../components/Booking";
 import TicketModal from "../components/TicketModel";
@@ -139,6 +139,30 @@ export default function DashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for ticket modal
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false); // State for new booking modal
 
+  const [no_bookings, setNoBookings] = useState(0);
+
+
+
+  //fetch user details from session
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const res = await fetch(`/api/getUserDetails`);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        if (data.rows) {
+          setNoBookings(data.rows.no_bookings); // Adjust according to your data structure
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []); // Added empty dependency array
+
   // Handle modal open
   const handleViewTicket = (ticket) => {
     setSelectedTicket(ticket);
@@ -194,7 +218,7 @@ export default function DashboardPage() {
           <div className="flex space-x-4">
             <StatsCard
               title="Total Bookings"
-              value={session?.user?.no_bookings || 0}
+              value={no_bookings || 0}
               image="/book3.webp" // Replace with the path to your image
             />
             <StatsCard
