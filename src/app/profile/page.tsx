@@ -7,11 +7,7 @@ import AirportSearch from "../components/AirportSearch";
 import Link from "next/link";
 import { FaHome, FaChartBar, FaPlusCircle, FaSignOutAlt } from "react-icons/fa";
 
-// ProfileCard component for displaying user information
-// ProfileCard component with extra spacing between information
-// ProfileCard component with topic-answer format and spacing
-// ProfileCard component with aligned data layout
-// ProfileCard component with labels and answers on the same line, separated by lines
+
 const ProfileCard = ({ name, email, role, dob }) => (
   <div className="p-6 bg-[#1A1D24] text-[#F4F6F8] rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
     <h2 className="text-2xl font-bold text-[#ffffff] mb-6">Profile</h2>

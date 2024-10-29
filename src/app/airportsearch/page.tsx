@@ -9,7 +9,7 @@ type Airport = {
 
 type Flight = {
   flight_id: number;
-  flight_schedule_id: number;
+  flightSchedule_id: number;
   aircraft_id: number;
   start_time: string;
   end_time: string;
@@ -62,6 +62,7 @@ const AirportSearch: React.FC = () => {
 
   // Redirect to booking page for a specific flight
   const handleBooking = (schedule: Flight) => {
+    
     router.push(`/booking/${schedule.flight_id}`);
   };
 
@@ -153,7 +154,7 @@ const AirportSearch: React.FC = () => {
                       <strong>Flight ID:</strong> {schedule.flight_id}
                     </p>
                     <p className="text-gray-300">
-                      <strong>Schedule ID:</strong> {schedule.flight_schedule_id}
+                      <strong>Schedule ID:</strong> {schedule.flightSchedule_id}
                     </p>
                     <p className="text-gray-300">
                       <strong>Start Time:</strong> {schedule.start_time}
