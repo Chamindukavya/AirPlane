@@ -42,13 +42,12 @@ const ProfileCard = ({ name, email, role, dob }) => (
   </div>
 );
 
-
 // Sidebar component for navigation
 const Sidebar = ({ name, email, role, dob }) => (
   <div className="w-full md:w-80 bg-[#0B0E12] text-white min-h-screen p-4 flex flex-col space-y-6">
     {/* Profile Card */}
     <ProfileCard name={name} email={email} role={role} dob={dob} />
-    
+
     {/* Navigation Links with spacing between items */}
     <nav className="mt-11 space-y-7">
       <ul className="space-y-5">
@@ -70,15 +69,12 @@ const Sidebar = ({ name, email, role, dob }) => (
           </Link>
         </li>
         <hr className="border-[#1A1D24]" /> {/* Separator Line */}
-        <li>
-          <button
-            onClick={() => handleNewBooking()}
-            className="flex items-center space-x-3 hover:text-[#1D90F4]"
-          >
-            <FaPlusCircle />
+        <Link href="/airportsearch" legacyBehavior>
+          <a className="flex items-center space-x-3 hover:text-[#1D90F4]">
+            <FaChartBar />
             <span>New Booking</span>
-          </button>
-        </li>
+          </a>
+        </Link>
         <hr className="border-[#1A1D24]" /> {/* Separator Line */}
         <li>
           <button
@@ -98,7 +94,8 @@ const Sidebar = ({ name, email, role, dob }) => (
 // StatsCard component with larger square dimensions
 const StatsCard = ({ title, value, image }) => (
   <div className="flex flex-col items-center justify-center w-48 h-48 bg-[#1A1D24] text-[#F4F6F8] rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
-    <h3 className="text-blue-500 mb-5">{title}</h3> {/* Updated heading color */}
+    <h3 className="text-blue-500 mb-5">{title}</h3>{" "}
+    {/* Updated heading color */}
     <p className="text-3xl font-bold text-[#ffffff]">{value}</p>
     {image && (
       <img
@@ -177,11 +174,9 @@ export default function DashboardPage() {
 
   return (
     <div className="flex min-h-screen bg-[#0B0E12]">
-      <div>
-        
-      </div>
+      <div></div>
       {/* Sidebar */}
-      
+
       <Sidebar
         name={session?.user?.name || "N/A"}
         email={session?.user?.email || "N/A"}
@@ -194,20 +189,15 @@ export default function DashboardPage() {
         {/* Header Section */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-[#F4F6F8]">Dashboard</h1>
-          
         </div>
-
         {/* Profile Info & Stats Section */}
-
         {/* Left Side - Profile Info */}
-
         {/* <ProfileCard
               name={session?.user?.name || "N/A"}
               email={session?.user?.email || "N/A"}
               role={session?.user?.role_name === "admin" ? "Admin" : "User"}
               dob={session?.user?.dob}
             /> */}
-
         {/* Right Side - Stats */}
         <div className="flex-grow space-y-5 flex">
           {/* Right Side - Square Stats Boxes */}
@@ -224,10 +214,8 @@ export default function DashboardPage() {
             />
           </div>
         </div>
-
         {/* Flight Schedule Section */}
         <FlightSchedule1 setTicketDetails={setTicketDetails} />
-
         {/* Ticket Details Section */}
         <div className="bg-[#1A1D24] bg-opacity-70 p-6 rounded-lg shadow-md mt-6">
           <h2 className="text-2xl font-bold text-[#F4F6F8] mb-4">
@@ -250,16 +238,15 @@ export default function DashboardPage() {
             )}
           </div>
         </div>
-
         {/* Modal for Viewing Selected Ticket */}
         <TicketModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           ticket={selectedTicket}
         />
-
         {/* Modal for New Booking (Airport Search) */}
-      /*  {isBookingModalOpen && (
+        /*{" "}
+        {isBookingModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className="bg-[#1A1D24] p-6 rounded-lg shadow-lg w-full max-w-3xl">
               <button
@@ -271,7 +258,8 @@ export default function DashboardPage() {
               <AirportSearch />
             </div>
           </div>
-        )}*/
+        )}
+        */
       </div>
     </div>
   );
