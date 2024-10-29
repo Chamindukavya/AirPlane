@@ -117,10 +117,10 @@ export default function Component({
 
   return (
     <Card className="flex flex-col">
-      {/* <CardHeader className="items-center pb-0">
-          <CardTitle>Pie Chart - Donut with Text</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
-        </CardHeader> */}
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Bookings - Passenger type</CardTitle>
+        <CardDescription>Bookings' Passenger type Composition</CardDescription>
+      </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}

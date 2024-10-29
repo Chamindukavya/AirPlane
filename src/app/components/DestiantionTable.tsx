@@ -56,6 +56,16 @@ export const columns: ColumnDef<PassengerCount>[] = [
     },
     cell: ({ row }) => <div>{row.getValue("destination_airport")}</div>,
   },
+
+  {
+    accessorKey: "airport_name",
+    header: () => <div className="text-center">Airport Name</div>,
+    cell: ({ row }) => {
+      const airport_name = row.getValue("airport_name") as number;
+
+      return <div className="text-center font-medium">{airport_name}</div>;
+    },
+  },
   {
     accessorKey: "num_of_passengers",
     header: () => <div className="text-right">Number of Passengers</div>,
@@ -86,7 +96,7 @@ export const columns: ColumnDef<PassengerCount>[] = [
             >
               Copy destination airport
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>View details</DropdownMenuCheckboxItem>
+            {/* <DropdownMenuCheckboxItem>View details</DropdownMenuCheckboxItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -122,7 +132,7 @@ export default function DestinationTable({
         body: JSON.stringify({ fromDate, toDate }),
       });
       const data = await res.json();
-      setData(data.passengerCount || []);
+      setData(data.passengerCount[0] || []);
       console.log("passenger count", data.passengerCount);
     } catch (error) {
       console.error("Failed to fetch data:", error);
@@ -146,7 +156,7 @@ export default function DestinationTable({
   });
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div text-center>Loading...</div>;
   }
 
   return (

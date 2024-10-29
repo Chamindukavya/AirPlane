@@ -23,6 +23,7 @@ import PassengerTable from "@/app/components/PassengerTable";
 import BookingTable from "@/app/components/BookingTable";
 import BookingPieChart from "@/app/components/BookingPieChart";
 import { Card } from "@/components/ui/card";
+import PassengerAgeTable from "@/app/components/PassengerAgeTable";
 interface Passenger {
   month: string;
   desktop: number;
@@ -110,7 +111,7 @@ export function PassengersPage() {
             <div className="flex h-full items-center justify-center p-6">
               <span className="font-semibold">
                 {report === 0 && (
-                  <p className="text-gray-600 text-sm text-center mt-1 mb-[-25px]">
+                  <p className="text-gray-600 text-sm text-center mt-1 mb-[-9px]">
                     - select a report -
                   </p>
                 )}
@@ -167,7 +168,7 @@ export function PassengersPage() {
             </div>
           )}
           {graph === 5 && selectedRoute !== null && (
-            <PassengerTable routeId={selectedRoute} />
+            <PassengerAgeTable routeId={selectedRoute} />
           )}
           {graph === 6 && (
             <DestinationTable fromDate={fromDate} toDate={toDate} />

@@ -22,12 +22,12 @@ const items = [
     icon: Home,
   },
   {
-    title: "Add aircraft",
+    title: "Add Aircraft",
     url: "./addAircraft",
     icon: Plane,
   },
   {
-    title: "Add airport",
+    title: "Add Airport",
     url: "./addairport",
     icon: MapPinHouse,
   },
@@ -38,7 +38,7 @@ const items = [
     icon: AlarmClockPlus,
   },
   {
-    title: "Show airplanes",
+    title: "Show Airplanes",
     url: "./showAirPlanes",
     icon: Plane,
   },

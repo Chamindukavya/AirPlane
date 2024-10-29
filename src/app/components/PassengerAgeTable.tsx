@@ -30,39 +30,83 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
 
 // New data structure
 
 // Define the types based on the new data structure
-export type PassengerCount = {
-  destination_airport: string;
-  num_of_passengers: number;
+export type PassengerDetails = {
+  name: string;
+  age: number;
+  dob: string;
+  seat_id: number;
+  passport_num: number;
+  class: string;
 };
 
 // Update the column definitions
-export const columns: ColumnDef<PassengerCount>[] = [
+export const columns: ColumnDef<PassengerDetails>[] = [
   {
-    accessorKey: "destination_airport",
+    accessorKey: "name",
+    header: () => <div className="text-right">Name</div>,
+    cell: ({ row }) => {
+      const age = row.getValue("name") as number;
+
+      return <div className="text-center">{age}</div>;
+    },
+  },
+  {
+    accessorKey: "age",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Destination Airport
+          Age
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("destination_airport")}</div>,
+    cell: ({ row }) => (
+      <div className="text-center font-medium">{row.getValue("age")}</div>
+    ),
   },
   {
-    accessorKey: "num_of_passengers",
-    header: () => <div className="text-right">Number of Passengers</div>,
-    cell: ({ row }) => {
-      const passengers = row.getValue("num_of_passengers") as number;
+    accessorKey: "dob",
+    header: () => <div className="text-right">Birthday</div>,
 
-      return <div className="text-right font-medium">{passengers}</div>;
+    cell: ({ row }) => {
+      const dob = row.getValue("dob") as number;
+
+      return <div className="text-right font-medium">{dob}</div>;
+    },
+  },
+  {
+    accessorKey: "seat_id",
+    header: () => <div className="text-right">Seat No.</div>,
+    cell: ({ row }) => {
+      const seat_id = row.getValue("seat_id") as number;
+
+      return <div className="text-right font-medium">{seat_id}</div>;
+    },
+  },
+  {
+    accessorKey: "passport_num",
+    header: () => <div className="text-right">Passport No.</div>,
+    cell: ({ row }) => {
+      const passport_num = row.getValue("passport_num") as number;
+
+      return <div className="text-right font-medium">{passport_num}</div>;
+    },
+  },
+  {
+    accessorKey: "class",
+    header: () => <div className="text-right">Class</div>,
+    cell: ({ row }) => {
+      const class$ = row.getValue("class") as number;
+
+      return <div className="text-right font-medium">{class$}</div>;
     },
   },
   {
@@ -80,13 +124,10 @@ export const columns: ColumnDef<PassengerCount>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuCheckboxItem
-              onClick={() =>
-                navigator.clipboard.writeText(passenger.destination_airport)
-              }
+              onClick={() => navigator.clipboard.writeText(passenger.name)}
             >
               Copy destination airport
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>View details</DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -94,36 +135,30 @@ export const columns: ColumnDef<PassengerCount>[] = [
   },
 ];
 
-export default function DestinationTable({
-  fromDate,
-  toDate,
-}: {
-  fromDate: string;
-  toDate: string;
-}) {
+export default function DestinationTable({ routeId }: { routeId: number }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [data, setData] = useState<PassengerCount[]>([]);
+  const [data, setData] = useState<PassengerDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true); // Start loading
     fetchData();
-  }, [fromDate, toDate]);
+  }, [routeId]);
 
   // Function to fetch graph data based on the selected route
   async function fetchData() {
     try {
-      const res = await fetch("/api/getPassengerCount", {
+      const res = await fetch("/api/getPassengerWithAge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fromDate, toDate }),
+        body: JSON.stringify({ flightSchedule_id: routeId }),
       });
       const data = await res.json();
-      setData(data.passengerCount || []);
-      console.log("passenger count", data.passengerCount);
+      setData(data.passengerDetails || []);
+      console.log("passenger count", data.passengerDetails[0]);
     } catch (error) {
       console.error("Failed to fetch data:", error);
     } finally {
@@ -146,23 +181,23 @@ export default function DestinationTable({
   });
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div text-center>Loading...</div>;
   }
 
   return (
     <div className="w-full">
+      <h3 className="font-semibold mt-2 ml-2">
+        Passenger Details of Upcoming Flight
+      </h3>
+
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter by destination airport..."
+          placeholder="Filter by Passport Number..."
           value={
-            (table
-              .getColumn("destination_airport")
-              ?.getFilterValue() as string) ?? ""
+            (table.getColumn("passport_num")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table
-              .getColumn("destination_airport")
-              ?.setFilterValue(event.target.value)
+            table.getColumn("passport_num")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

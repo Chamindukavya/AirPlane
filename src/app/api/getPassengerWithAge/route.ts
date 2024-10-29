@@ -11,27 +11,22 @@ export async function POST(request: NextRequest) {
 
         // Call the stored procedure
         const [results] = await connection.execute(
-            'CALL GetFlightAndPassengerDetails(?)',
+            'CALL GetFlightAndPassengersWithAge(?)',
             [flightSchedule_id]
         );
-
+        console.log("results:", results);
         // Check if results are returned
-        const flightDetails = results[0] ;
-
-        if (flightDetails.length === 0) {
+        const passengerDetails = results[0] ;
+     
+        if (passengerDetails.length === 0) {
             return NextResponse.json({ message: 'No future flights found for this flight schedule ID' });
         }
 
         // Assuming we want the first row in the result
-        const flightInfo = flightDetails[0];
+        const flightInfo = passengerDetails[0];
 
         return NextResponse.json({
-            model: flightInfo.model,
-            start_time: flightInfo.start_time,
-            end_time: flightInfo.end_time,
-            capacity: flightInfo.capacity,
-            under18: flightInfo.under18,
-            above18: flightInfo.above18
+            passengerDetails: passengerDetails
         });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);

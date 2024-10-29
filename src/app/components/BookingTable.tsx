@@ -45,10 +45,12 @@ export default function BookingTable({
   }, [fromDate, toDate]); // Dependencies array
   return (
     <Table>
-      <TableCaption className="text-center">{}</TableCaption>
+      <TableCaption className="text-center">
+        Number of bookings by each passenger type
+      </TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>passenger type</TableHead>
+          <TableHead>Passenger type</TableHead>
           <TableHead className="text-right">counts</TableHead>
         </TableRow>
       </TableHeader>
