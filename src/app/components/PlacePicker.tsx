@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +19,13 @@ import {
 } from "@/components/ui/popover";
 import { useEffect } from "react";
 
-export default function ComboboxDemo() {
+interface AirportSelectorProps {
+  onAirportSelect: (airport: string) => void;
+}
+
+export default function ComboboxDemo({
+  onAirportSelect,
+}: AirportSelectorProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [airports, setAirports] = React.useState<{ airport_code: string }[]>(
@@ -33,27 +38,34 @@ export default function ComboboxDemo() {
         const response = await fetch("/api/getAirports/");
         const data = await response.json();
 
-        console.log("API Response:", data); // Log the full response
+        console.log("API Response:", data);
 
-        // Make sure you check the response structure here
         if (Array.isArray(data.airports)) {
           setAirports(data.airports);
         } else {
           console.error("Expected an array but received:", data);
-          setAirports([]); // Ensure airports is always an array
+          setAirports([]);
         }
       } catch (err) {
         console.error("Error fetching airports", err);
-        setAirports([]); // Ensure airports is always an array
+        setAirports([]);
       }
     }
     fetchData();
   }, []);
 
+  const handleSelect = (currentValue: string) => {
+    const newValue = currentValue === value ? "" : currentValue;
+    setValue(newValue);
+    onAirportSelect(newValue); // Pass the selected airport to the main page
+    setOpen(false);
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          onClick={() => console.log("Selected value:", value)}
           variant="outline"
           role="combobox"
           aria-expanded={open}
@@ -76,10 +88,7 @@ export default function ComboboxDemo() {
                 <CommandItem
                   key={airport.airport_code}
                   value={airport.airport_code}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  onSelect={() => handleSelect(airport.airport_code)}
                 >
                   <Check
                     className={cn(

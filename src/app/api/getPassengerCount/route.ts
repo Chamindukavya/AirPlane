@@ -10,10 +10,7 @@ export async function POST(request: NextRequest) {
 
       // Fetch the next immediate flight for the given flight_id
       const [passengerCount] :any[] = await connection.execute(
-        `SELECT destination_airport, count(passenger_id) AS num_of_passengers
-            FROM passenger_details 
-            join flight_details using(flight_id) 
-            where date between ? AND ? group by destination_airport;`,
+        `CALL GetPassengerCountByDestination(?,?)`,
         [fromDate, toDate]
       );
      

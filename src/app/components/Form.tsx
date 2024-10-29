@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form"; // Import FormProvider
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -78,81 +78,101 @@ export function ComboboxForm({ onSubmit }: ComboboxFormProps) {
 
   // Handle form submission
   function handleSubmit() {
-    onSubmit(selectedRoute); // Pass the selected route to the parent component
+    onSubmit(selectedRoute);
   }
 
   return (
-    <div className="m-[-110px]">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="route"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel className="text-xs">Flight Route</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-[250px] justify-between text-xs",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? routes.find((route) => route.route === field.value)
-                              ?.route
-                          : "Select Route"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[250px] p-0 text-xs">
-                    <Command>
-                      <CommandInput placeholder="Search route..." />
-                      <CommandList>
-                        <CommandEmpty className="text-xs">
-                          No routes found.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {routes.map((route: any) => (
-                            <CommandItem
-                              className="text-xs"
-                              value={route.route}
-                              key={route.flightschedule_id}
-                              onSelect={() => {
-                                form.setValue("route", route.route);
-                                setSelectedRoute(route.flightschedule_id); // Set selected route
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  route.route === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {route.route}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button className="text-xs" type="submit">
+    <FormProvider {...form}>
+      {/* Ensure all form fields are wrapped in FormProvider */}
+      <div className="grid grid-cols-3 gap-4 items-center mt-1 mb-[-25px]">
+        {/* Column 1: Label */}
+        <div>
+          <FormLabel className="text-xs">Flight Route</FormLabel>
+        </div>
+
+        {/* Column 2: Form (Popover for Route Selection) */}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-6 ml-[-90px]"
+          >
+            <FormField
+              control={form.control}
+              name="route"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[250px] justify-between text-xs",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? routes.find(
+                                (route) => route.route === field.value
+                              )?.route
+                            : "Select Route"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[250px] p-0 text-xs">
+                      <Command>
+                        <CommandInput placeholder="Search route..." />
+                        <CommandList>
+                          <CommandEmpty className="text-xs">
+                            No routes found.
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {routes.map((route: any) => (
+                              <CommandItem
+                                className="text-xs"
+                                value={route.route}
+                                key={route.flightschedule_id}
+                                onSelect={() => {
+                                  form.setValue("route", route.route);
+                                  setSelectedRoute(route.flightschedule_id); // Set selected route
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    route.route === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {route.route}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+
+        {/* Column 3: Button */}
+        <div>
+          <Button
+            className="text-xs"
+            type="submit"
+            onClick={form.handleSubmit(handleSubmit)}
+          >
             Analyze
           </Button>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </div>
+    </FormProvider>
   );
 }
 

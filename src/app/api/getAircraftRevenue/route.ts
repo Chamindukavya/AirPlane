@@ -8,16 +8,10 @@ export async function GET(request: NextRequest) {
       const connection = await mysql.createConnection(connectionParams);
  
       // Fetch the next immediate flight for the given flight_id
-      const [aircraftRevenue] :any[] = await connection.execute(
-        `select model AS month, revenue AS desktop from aircrafts join
-            (SELECT aircraft_id ,
-            (sum(price_economy)+sum(price_business)+sum(price_platinum)) AS revenue 
-            FROM flight_details 
-            group by aircraft_id) AS revenue using(aircraft_id);`
-      );
+      const [aircraftRevenue] :any[] = await connection.execute('CALL GetAircraftRevenue()');
       console.log(aircraftRevenue);
       return NextResponse.json({
-        aircraftRevenue: aircraftRevenue
+        aircraftRevenue: aircraftRevenue[0]
       });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);

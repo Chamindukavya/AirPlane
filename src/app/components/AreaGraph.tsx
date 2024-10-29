@@ -20,7 +20,7 @@ import {
 const chartConfig = {
   desktop: {
     label: "Passengers",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
@@ -46,12 +46,13 @@ function AreaGraph(props: { result: any[]; year: number }) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="month" // make sure this has a default or correct data type
               tickLine={true}
               axisLine={true}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 20)}
+              tickFormatter={(value) => value.slice(0, 20)} // add default to avoid undefined values
             />
+
             <ChartTooltip
               cursor={true}
               content={<ChartTooltipContent indicator="line" />}

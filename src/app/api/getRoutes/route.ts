@@ -9,16 +9,11 @@ export async function GET(request: NextRequest) {
  
       // Fetch the next immediate flight for the given flight_id
       const [routes] :any[] = await connection.execute( 
-     `SELECT flightschedule_id, 
-       origin_airport AS origin, 
-       destination_airport AS destination, 
-       DATE_FORMAT(DATE(date), '%Y-%m-%d') as date 
-FROM flightSchedule;
-`
+     'CALL GetFlightSchedules()'
       );
-      console.log(routes);
+      console.log('routes' ,routes);
       return NextResponse.json({
-        routes: routes
+        routes: routes[0]
       });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);
