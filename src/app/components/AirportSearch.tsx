@@ -76,7 +76,7 @@ const AirportSearch: React.FC = () => {
   return (
     <div className="p-10 bg-gradient-to-r from-blue-100 to-white rounded-xl shadow-2xl max-w-5xl mx-auto my-12">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
-        Search a Flight
+        Search an Flight
       </h1>
 
       {/* Search form */}
