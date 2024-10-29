@@ -1,76 +1,39 @@
-import Link from "next/link";
-import { authOptions } from "../lib/auth";
-import Logout from "./Logout"; // Assuming you have a Logout component
-import React from "react";
-import { getServerSession } from "next-auth";
+"use client";
 
-const Navbar: React.FC = async () => {
-  const session = await getServerSession(authOptions);
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import Logout from "./Logout";
+import React from "react";
+
+const Navbar: React.FC = () => {
+  const { data: session } = useSession();
 
   return (
-    <nav className="bg-white p-4 shadow-lg">
+    <nav className="bg-black p-4 shadow-lg">
       <React.Fragment>
         <div className="container mx-auto flex justify-between items-center">
-          {/* Brand/Logo Section */}
-          <div className="text-blue-600 font-bold text-2xl tracking-wide">
-            B Airlines
+          <div className="text-white font-bold text-2xl tracking-wide flex items-center space-x-2">
+            <img src="/logo1.jpg" alt="Logo" className="h-8 w-8" />
+            <span>B Airlines</span>
           </div>
 
-          {/* Links Section */}
           <div className="space-x-6 flex items-center">
-            {/* Home Link */}
-            <Link
-              href="/"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-            >
-              Home
-            </Link>
+            <Link href="/" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Home</Link>
+            <Link href="/airportsearch" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Book</Link>
+            <Link href="/profile" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Profile</Link>
 
-            {/* Tickets Link */}
-            <Link
-              href="/showTicket"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-            >
-              Tickets
-            </Link>
+            {session?.user?.role_name === "admin" && (
+              <Link href="/Admin" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Admin</Link>
+            )}
 
-            {/* Profile Link */}
-            <Link
-              href="/profile"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-            >
-              Profile
-            </Link>
-
-            {/* Admin Link - Conditional based on user's role */}
-            {session?.user?.role_name === "admin" ? (
-              <Link
-                href="/Admin"
-                className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-              >
-                Admin
-              </Link>
-            ) : null}
-
-            {/* Login / Signup Links - Conditionally Rendered */}
             {session?.user ? (
-              <span className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">
-                <Logout /> {/* Logout styled in blue */}
+              <span className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">
+                <Logout />
               </span>
             ) : (
               <>
-                <Link
-                  href="/Login"
-                  className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/Signup"
-                  className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-                >
-                  Sign up
-                </Link>
+                <Link href="/Login" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Login</Link>
+                <Link href="/Signup" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Sign up</Link>
               </>
             )}
           </div>

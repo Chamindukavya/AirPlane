@@ -13,8 +13,10 @@ export async function POST(request: NextRequest) {
 
     // Update the status of the ticket with the given ticket_id
     await connection.execute(
+
         'CALL UpdateTicketStatus(?)'
         , 
+
       [ticket_id]
     );
 

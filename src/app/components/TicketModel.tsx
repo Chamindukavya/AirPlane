@@ -30,6 +30,31 @@ const TicketModal: React.FC<TicketModalProps> = ({
   if (!isOpen || !ticket) {
     return null; // If modal is not open or no ticket is selected, don't render
   }
+  const cancelTicket = async () => {
+    if (ticket) {
+      try {
+        const response = await fetch("/api/cancelTicket", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ticket_id: ticket.ticket_id }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to cancel the ticket");
+        }
+
+        const result = await response.json();
+        console.log("Ticket cancelled:", result);
+
+        // Close modal or provide feedback after successful cancellation
+        onClose();
+      } catch (error) {
+        console.error("Error canceling ticket:", error);
+      }
+    }
+  };
 
   return (
     <div
@@ -97,6 +122,7 @@ const TicketModal: React.FC<TicketModalProps> = ({
               </p>
               <p>{ticket.name}</p>
             </div>
+            
             <div
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.7)", // Light ash box
@@ -240,6 +266,22 @@ const TicketModal: React.FC<TicketModalProps> = ({
             }}
           >
             Close
+          </button>
+          <button
+            onClick={cancelTicket}
+            style={{
+              backgroundColor: "#f44336", // Red button for cancel action
+              color: "#fff",
+              padding: "10px 16px",
+              fontWeight: "bold",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              marginLeft: "10px", // Space between buttons
+            }}
+          >
+            Cancel Ticket
           </button>
         </div>
       </div>
