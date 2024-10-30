@@ -26,7 +26,7 @@ export default function HomePage() {
 
           {/* Buttons */}
           <div className="mt-8 flex space-x-4 justify-center">
-            <Link href="/Signup" passHref>
+            <Link href="/airportsearch" passHref>
               <button className="px-7 py-4 border-5 border-black bg-blue-300 text-black hover:bg-gray-500 rounded-lg transition duration-300">
                 Get Started
               </button>
@@ -54,7 +54,7 @@ export default function HomePage() {
           Enjoy With Our Top Destinations
         </h2>
       </div>
-      
+
       <div className="mt-8">
         <DestinationCarousel />
       </div>
