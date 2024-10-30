@@ -36,7 +36,7 @@ const AddFlight = () => {
         setEnd_time("");
         setAircraft_id("");
       } else {
-        setMessage(`Error: ${result.error}`);
+        setMessage(`Aircraft already taken`);
       }
     } catch (error) {
       setMessage(`Error: ${error}`);
