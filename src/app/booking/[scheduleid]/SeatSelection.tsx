@@ -44,30 +44,28 @@ function SeatSelection({
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4 text-gray-900">Select Seats</h2>
-      <div className="grid grid-cols-5 gap-1 mb-4"> {/* Set gap to 0 for no spacing */}
+      <div className="grid grid-cols-8 gap-1 mb-4">
         {filteredSeats.map(seat => (
           <button
             key={seat.seatId}
             onClick={() => handleSelectSeat(seat)}
             disabled={bookedSeats.includes(seat.seatId)}
-            className={`w-16 p-2 text-xs border rounded ${ // Set fixed width here
+            className={`w-8 h-8 p-0.5 text-xs border rounded flex items-center justify-center ${
               bookedSeats.includes(seat.seatId)
                 ? 'bg-red-500 text-white cursor-not-allowed'
                 : selectedSeats.includes(seat.seatId)
                 ? 'bg-blue-500 text-white'
-                : 'bg-green-500 hover:bg-gray-200'
+                : 'bg-green-500 hover:bg-green-600 text-white'
             }`}
             aria-label={`Seat ${seat.seatId} ${seat.class}`}
           >
-            {seat.class !== 'unknown'
-              ? `${seat.class.charAt(0).toUpperCase() + seat.class.slice(1)} ${seat.seatId}`
-              : `Seat ${seat.seatId}`}
+            {seat.seatId}
           </button>
         ))}
       </div>
       <p className="text-gray-700">Selected Seats: {selectedSeats.join(', ')}</p>
     </div>
-  );
+  );  
 }
 
 export default SeatSelection;
