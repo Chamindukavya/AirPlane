@@ -11,19 +11,19 @@ export default function FlightSchedulePage() {
   const [craftData, setCraftData] = useState<FlightSchedule[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Step 1: Define an array of image URLs corresponding to each aircraft
+  // Define an array of image URLs corresponding to each aircraft
   const imageArray = [
     "/home3.jpg", 
     "/home.jpg", 
     "/air1.jpg",
     "/abcdg.jpeg",
-    "/air2.jpeg",   // Image for the first aircraft
-      // Image for the second aircraft
-    
-     "/air1.webp",
-     
-
-        // Image for the third aircraft (and so on)
+    "/air2.jpeg",
+    "/air66.jpeg",
+    "/air8.jpeg",
+    "/air13.jpeg",
+    "/air10.jpeg",
+    "/air11.jpeg",
+    "/air1.webp",
   ];
 
   useEffect(() => {
@@ -59,9 +59,9 @@ export default function FlightSchedulePage() {
             key={index}
             className="bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 border border-opacity-30 border-gray-400"
           >
-            {/* Step 2: Use the image from the image array based on the index */}
+            {/* Use modulo operator to cycle through the images */}
             <img
-              src={imageArray[index]} // Use the image corresponding to the aircraft
+              src={imageArray[index % imageArray.length]} // Use the modulo operator to repeat images
               alt="Aircraft"
               className="w-full h-52 object-cover mb-6 rounded-lg"
             />

@@ -27,7 +27,7 @@ const Contact: React.FC = () => {
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-semibold mb-2">Visit Us</h2>
               <p>Our headquarters:</p>
-              <p className="text-blue-400">123 Airline Avenue, Suite 500, Cityville, USA</p>
+              <p className="text-blue-400">123 Airline Avenue, Main Road,Colombo,Sri Lanka</p>
             </div>
           </div>
         </section>
@@ -38,32 +38,32 @@ const Contact: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Team Member 1 */}
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-              <img src="/images/team1.jpg" alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Chamindu Kavya</h2>
+              <img src="/m1.png" alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">S.Gamage</h2>
               <p className="text-gray-400">CEO</p>
             </div>
             {/* Team Member 2 */}
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-              <img src="/images/team2.jpg" alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Kasun Chamara</h2>
+              <img src="/m5.jpeg" alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Aruni Perera</h2>
               <p className="text-gray-400">Head of Customer Service</p>
             </div>
             {/* Team Member 3 */}
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-              <img src="/images/team3.jpg" alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Pawani Gamage</h2>
+              <img src="/m2.jpeg" alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Noyel Fernando</h2>
               <p className="text-gray-400">Chief Operating Officer</p>
             </div>
             {/* Team Member 4 */}
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-              <img src="/images/team4.jpg" alt="Team Member 4" className="w-32 h-32 rounded-full mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Methmi Rathnayake</h2>
+              <img src="/m3.jpeg" alt="Team Member 4" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">A.D.Silva</h2>
               <p className="text-gray-400">Marketing Director</p>
             </div>
             {/* Team Member 5 */}
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-              <img src="/images/team5.jpg" alt="Team Member 5" className="w-32 h-32 rounded-full mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Janith Piumal</h2>
+              <img src="/m4.jpeg" alt="Team Member 5" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Sheril De Silva</h2>
               <p className="text-gray-400">Chief Financial Officer</p>
             </div>
           </div>

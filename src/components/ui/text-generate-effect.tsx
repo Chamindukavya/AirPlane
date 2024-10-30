@@ -4,46 +4,52 @@ import { motion, stagger, useAnimate } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const TextGenerateEffect = ({
-  words,
   className,
   filter = true,
-  duration = 0.5,
+  duration = 0.7,
 }: {
-  words: string;
   className?: string;
   filter?: boolean;
   duration?: number;
 }) => {
   const [scope, animate] = useAnimate();
-  let wordsArray = words.split(" ");
+
+  // Define the lines of text
+  const textLines = [
+    "Discover New Destinations",
+    "Book with Ease",
+    "Begin Your Adventure Today",
+  ];
 
   useEffect(() => {
     animate(
       "span",
       {
-        opacity: 1,
+        opacity: 2,
         filter: filter ? "blur(0px)" : "none",
       },
       {
         duration: duration ? duration : 1,
-        delay: stagger(0.2),
+        delay: stagger(0.3),
       }
     );
   }, [scope.current]);
 
-  const renderWords = () => {
+  const renderTextLines = () => {
     return (
-      <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => {
+      <motion.div ref={scope} className="flex flex-col items-center">
+        {textLines.map((line, idx) => {
           return (
             <motion.span
-              key={word + idx}
-              className="text-outline dark:text-white text-black"
+              key={line + idx}
+              className="opacity-0"
               style={{
                 filter: filter ? "blur(10px)" : "none",
               }}
             >
-              {word}{" "}
+              <span className="text-8xl leading-snug tracking-wide text-white">
+                {line}
+              </span>
             </motion.span>
           );
         })}
@@ -52,39 +58,21 @@ export const TextGenerateEffect = ({
   };
 
   return (
-    <div className={cn("font-bold", className)}>
+    <div
+      className={cn("font-bold text-center", className)}
+      style={{ fontFamily: "Arial, sans-serif" }}
+    >
       <div className="mt-4">
         <div
-          className="relative dark:text-white text-black text-6xl leading-snug tracking-wide 
-            p-6 rounded-lg shadow-lg border border-gray-300 dark:border-gray-700"
+          className="dark:text-gray-700 text-white"
           style={{
-            backgroundColor: "rgba(100, 100, 100, 0.5)", // Ash-colored transparent background
-            backdropFilter: "blur(10px)", // Adds a subtle glassy effect
-            border: "1px solid rgba(255, 255, 255, 0.2)", // Semi-transparent border
+            fontFamily: "Playfair Display",
+            textShadow: "3px 3px 7px rgba(1, 1, 1, 0.5)", // Add shadow effect here
           }}
         >
-          {/* Shadow Box */}
-          <div
-            className="absolute inset-0 z-[-1] rounded-lg bg-transparent
-              shadow-lg shadow-transparent blur-[2px]"
-            style={{ opacity: 0.4 }} // Softer ash-colored shadow effect
-          ></div>
-
-          {renderWords()}
+          {renderTextLines()}
         </div>
       </div>
     </div>
   );
 };
-
-// CSS in your global stylesheet or within a styled component
-<style jsx global>{`
-  .text-outline {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8); /* White outline */
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8),
-      /* Dark shadow for depth */ 0px 0px 20px rgba(255, 255, 255, 0.6); /* Glow effect */
-    background: linear-gradient(90deg, #ffafbd 0%, #ffc3a0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-`}</style>;

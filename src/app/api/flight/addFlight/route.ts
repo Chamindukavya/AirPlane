@@ -8,14 +8,27 @@ export async function POST(request: NextRequest) {
   try {
     const { flightSchedule_id, start_time, end_time, aircraft_id, country } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
-    console.log(flightSchedule_id);
 
+    // Check if the aircraft is available
+    const [aircraftRows] = await connection.execute(
+      `SELECT is_availabl FROM aircrafts WHERE aircraft_id = ?`, 
+      [aircraft_id]
+    );
+
+    if (aircraftRows.length === 0 || aircraftRows[0].is_available === 0) {
+      // Aircraft is not available or does not exist
+      connection.end();
+      return NextResponse.json({ message: 'Aircraft is not available or does not exist' }, { status: 400 });
+    }
+
+    // If available, insert the new flight
     const insert_query = `
       INSERT INTO flight (flightSchedule_id, start_time, end_time, aircraft_id)
       VALUES (?, ?, ?, ?)
     `;
-
     const [results] = await connection.execute(insert_query, [flightSchedule_id, start_time, end_time, aircraft_id]);
+
+    
 
     connection.end();
     
