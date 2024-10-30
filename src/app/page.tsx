@@ -54,6 +54,7 @@ export default function HomePage() {
           Enjoy With Our Top Destinations
         </h2>
       </div>
+      
       <div className="mt-8">
         <DestinationCarousel />
       </div>
