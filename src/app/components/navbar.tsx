@@ -20,16 +20,20 @@ const Navbar: React.FC = () => {
           <div className="space-x-6 flex items-center">
             <Link href="/" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Home</Link>
             <Link href="/airportsearch" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Book</Link>
-            <Link href="/profile" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Profile</Link>
+            
 
             {session?.user?.role_name === "admin" && (
               <Link href="/Admin" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Admin</Link>
             )}
 
             {session?.user ? (
+              <>
+              <Link href="/profile" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Profile</Link>
               <span className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">
                 <Logout />
               </span>
+            </>
+              
             ) : (
               <>
                 <Link href="/Login" className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">Login</Link>

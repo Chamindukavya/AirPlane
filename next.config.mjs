@@ -6,7 +6,7 @@ env: {
     host_dev: 'localhost',
     user_dev: 'root',
     port_dev: '3306',
-    password_dev: 'Hiphop2002@',
+    password_dev: 'Rathnayaka01@',
     database_dev: 'students',
 }
 };
