@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "focus-trap-react": "^10.3.0",
     "framer-motion": "^11.11.10",
     "lucide-react": "^0.451.0",
     "mysql2": "^3.11.0",
