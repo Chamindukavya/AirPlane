@@ -9,17 +9,15 @@ export async function POST(request: NextRequest) {
         const { origin, destination } = await request.json();
         const connection = await mysql.createConnection(connectionParams);
 
-        // Call the stored procedure to get flight details
-        const [flightDetails]: any[] = await connection.execute(
-            'CALL GetFlightDetailsByOriginDestination(?, ?)', 
-            [origin, destination]
-        );
-
-        console.log(flightDetails);
-        
-        return NextResponse.json({
-            flightDetails: flightDetails
-        });
+      // Fetch the next immediate flight for the given flight_id
+      const [flightDetails] :any[] = await connection.execute(
+        `CALL GetFlightDetailsByOriginDestination(?, ?)`,
+        [origin,destination]
+      );
+      console.log(flightDetails);
+      return NextResponse.json({
+        flightDetails : flightDetails[0]
+      });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);
     

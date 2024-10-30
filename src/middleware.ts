@@ -39,6 +39,9 @@ export const config = {
     '/adminOnly/addFlightSchedule',
     '/Signup',
     '/Login',
-  
+  '/adminOnly/addAircraft',
+'/adminOnly/addairport',
+'/adminOnly/addFlight',
+'/adminOnly/addFlightSchedule',
   ], 
 }

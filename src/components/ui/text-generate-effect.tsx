@@ -58,12 +58,15 @@ export const TextGenerateEffect = ({
   };
 
   return (
-    <div className={cn("font-bold text-center", className)} style={{ fontFamily: "Arial, sans-serif" }}>
+    <div
+      className={cn("font-bold text-center", className)}
+      style={{ fontFamily: "Arial, sans-serif" }}
+    >
       <div className="mt-4">
         <div
           className="dark:text-gray-700 text-white"
           style={{
-            fontFamily: "Playfair Display", 
+            fontFamily: "Playfair Display",
             textShadow: "3px 3px 7px rgba(1, 1, 1, 0.5)", // Add shadow effect here
           }}
         >

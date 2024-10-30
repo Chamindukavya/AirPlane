@@ -4,6 +4,7 @@ import ImageCarousel from "./components/ImageCarousel"; // Adjust path if necess
 import DestinationCarousel from "./components/FlyingPlaces";
 import { TextGenerateEffectDemo } from "./components/text_generation";
 //import { GlobeDemo } from "./components/globe";
+//import { GlobeDemo } from "./components/globe";
 
 export default function HomePage() {
   return (
@@ -20,7 +21,6 @@ export default function HomePage() {
           playsInline
         />
 
-        {/* Container for text and buttons */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
           <TextGenerateEffectDemo />
 
@@ -41,25 +41,25 @@ export default function HomePage() {
       </div>
 
       {/* Other Content Sections */}
-      <div className="bg-blue-700">
-        
-      </div>
+      <div className="bg-blue-700"></div>
       <div className="mt-8  text-center">
         <h2 className="text-5xl text-white font-bold">
           Experience Excellence with Our Services!
         </h2>
       </div>
       <div className="mt-8 ">
-        <ImageCarousel />
-      </div>
-      <div className="mt-8 text-center">
-        <h2 className="text-5xl text-blue-500 font-bold">
-          Enjoy With Our Top Destinations
-        </h2>
-      </div>
+        <div className="mt-8 ">
+          <ImageCarousel />
+        </div>
+        <div className="mt-8 text-center">
+          <h2 className="text-5xl text-blue-500 font-bold">
+            Enjoy With Our Top Destinations
+          </h2>
+        </div>
 
-      <div className="mt-8">
-        <DestinationCarousel />
+        <div className="mt-8">
+          <DestinationCarousel />
+        </div>
       </div>
     </div>
   );
