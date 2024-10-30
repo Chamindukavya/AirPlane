@@ -34,12 +34,14 @@ const FlightSchedule1 = ({ setTicketDetails }: FlightSchedule1Props) => {
           aircraft_id: ticket.aircraft_id,
           origin_airport:ticket.origin_airport,
           destination_airport:ticket.destination_airport,
-          ticket_id:ticket.ticket_id
+          ticket_id:ticket.ticket_id,
+          status:ticket.state
 
 
         }));
         setTickets(simplifiedTickets);
         setTicketDetails(simplifiedTickets); // Pass the data up to the parent component
+        console.log("test  booking   ", simplifiedTickets);
       } catch (err) {
         setError("Failed to fetch flight schedule.");
         console.error(err);
