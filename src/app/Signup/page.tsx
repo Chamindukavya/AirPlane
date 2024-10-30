@@ -22,7 +22,7 @@ const SignUp: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, date_of_birth }),
+        body: JSON.stringify({ name, email, password, dob }),
       });
 
       if (response.ok) {
