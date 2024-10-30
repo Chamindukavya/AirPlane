@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import FlightSchedule1 from "../components/Booking";
 import TicketModal from "../components/TicketModel";
-import AirportSearch from "../components/AirportSearch";
+import AirportSearch from "../airportsearch/page";
 import Link from "next/link";
 import { FaHome, FaChartBar, FaPlusCircle, FaSignOutAlt } from "react-icons/fa";
 
