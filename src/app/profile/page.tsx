@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import FlightSchedule1 from "../components/Booking";
 import TicketModal from "../components/TicketModel";
-import AirportSearch from "../components/AirportSearch";
+import AirportSearch from "../airportsearch/page";
 import Link from "next/link";
 import { FaHome, FaChartBar, FaPlusCircle, FaSignOutAlt } from "react-icons/fa";
-
 
 const ProfileCard = ({ name, email, role, dob }) => (
   <div className="p-6 bg-[#1A1D24] text-[#F4F6F8] rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
@@ -90,8 +89,6 @@ const Sidebar = ({ name, email, role, dob }) => (
   </div>
 );
 
-// StatsCard component for displaying statistics
-// StatsCard component with larger square dimensions
 const StatsCard = ({ title, value, image }) => (
   <div className="flex flex-col items-center justify-center w-48 h-48 bg-[#1A1D24] text-[#F4F6F8] rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
     <h3 className="text-blue-500 mb-5">{title}</h3>{" "}
@@ -107,7 +104,6 @@ const StatsCard = ({ title, value, image }) => (
   </div>
 );
 
-// TicketCard component for displaying individual ticket details
 const TicketCard = ({ name, date, startTime, aircraftId, onView }) => (
   <div className="p-4 bg-[#1A1D24] text-[#F4F6F8] rounded-lg shadow-md flex justify-between items-start transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
     <div className="flex-grow">
@@ -134,22 +130,20 @@ export default function DashboardPage() {
 
   const [no_bookings, setNoBookings] = useState(0);
 
-
-
   //fetch user details from session
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const res = await fetch(`/api/getUserDetails`);
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await res.json();
         if (data.rows) {
           setNoBookings(data.rows.no_bookings); // Adjust according to your data structure
         }
       } catch (error) {
-        console.error('Fetch error:', error);
+        console.error("Fetch error:", error);
       }
     };
 

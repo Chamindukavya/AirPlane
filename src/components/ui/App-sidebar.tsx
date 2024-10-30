@@ -18,7 +18,7 @@ import Link from "next/link";
 const items = [
   {
     title: "Dashboard",
-    url: "././Admin",
+    url: "../Admin",
     icon: Home,
   },
   {

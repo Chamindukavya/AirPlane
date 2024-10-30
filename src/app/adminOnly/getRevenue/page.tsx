@@ -130,7 +130,7 @@ export function RevenuePage() {
             </Table>
           </div>
 
-          <div className="flex-1 flex flex-col items-center">
+          {/* <div className="flex-1 flex flex-col items-center">
             <CardHeader className="text-center">
               <CardTitle>Aircraft Model - Revenue</CardTitle>
               <CardDescription>January - June 2024</CardDescription>
@@ -159,7 +159,7 @@ export function RevenuePage() {
                 </Bar>
               </BarChart>
             </CardContent>
-          </div>
+          </div> */}
         </Card>
       </div>
     );
