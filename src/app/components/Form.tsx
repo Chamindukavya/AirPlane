@@ -58,8 +58,8 @@ export function ComboboxForm({ onSubmit }: ComboboxFormProps) {
       try {
         const response = await fetch("/api/getRoutes");
         const data = await response.json();
-
-        const routes = data.routes.map((item: RoutesSep) => ({
+        console.log(data);
+        const routes = data.routes[0].map((item: RoutesSep) => ({
           flightschedule_id: item.flightschedule_id,
           route: item.origin + " - " + item.destination + "  |  " + item.date,
         }));

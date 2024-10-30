@@ -45,14 +45,19 @@ const AddFlight = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#211f1e] p-4">
-      <div className="w-full max-w-2xl bg-white bg-opacity-70 p-8 rounded-xl shadow-xl backdrop-blur-lg transform hover:scale-105 transition duration-300 ease-in-out">
-        <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">Add New Flight</h2>
+      <div className=" text-black w-full max-w-2xl bg-white bg-opacity-70 p-8 rounded-xl shadow-xl backdrop-blur-lg transform hover:scale-105 transition duration-300 ease-in-out">
+        <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">
+          Add New Flight
+        </h2>
         <h3 className="text-center text-lg text-gray-800 mb-6">
-          Schedule ID: <span className="text-blue-600 font-semibold">{scheduleid}</span>
+          Schedule ID:{" "}
+          <span className="text-blue-600 font-semibold">{scheduleid}</span>
         </h3>
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div>
-            <label className="block text-gray-800 font-medium mb-2">Start Time:</label>
+            <label className="block text-gray-800 font-medium mb-2">
+              Start Time:
+            </label>
             <input
               type="time"
               value={start_time}
@@ -62,7 +67,9 @@ const AddFlight = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-800 font-medium mb-2">End Time:</label>
+            <label className="block text-gray-800 font-medium mb-2">
+              End Time:
+            </label>
             <input
               type="time"
               value={end_time}
@@ -72,7 +79,9 @@ const AddFlight = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-800 font-medium mb-2">Aircraft ID:</label>
+            <label className="block text-gray-800 font-medium mb-2">
+              Aircraft ID:
+            </label>
             <input
               type="number"
               value={aircraft_id}

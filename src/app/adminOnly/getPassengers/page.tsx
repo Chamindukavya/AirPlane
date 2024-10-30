@@ -48,14 +48,11 @@ export function PassengersPage() {
   // Function to fetch graph data based on the selected route
   async function fetchData(route?: string) {
     try {
-      const response = await fetch(
-        `/api/getMonthPassenger${route ? `?route=${route}` : ""}`
-      );
+      const response = await fetch(`/api/getMonthPassenger`);
       const data = await response.json();
 
-      console.log("response:", response);
-      console.log("data:", data);
-      setResult(data.passenger);
+      console.log("data:", data.passenger[0]);
+      setResult(data.passenger[0]);
       setYear(data.year);
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -111,7 +108,7 @@ export function PassengersPage() {
             <div className="flex h-full items-center justify-center p-6">
               <span className="font-semibold">
                 {report === 0 && (
-                  <p className="text-gray-600 text-sm text-center mt-1 mb-[-9px]">
+                  <p className="text-gray-600 text-sm mt-1 mb-[-9px]">
                     - select a report -
                   </p>
                 )}

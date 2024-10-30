@@ -13,7 +13,14 @@ const AddFlightSchedule = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const airportData = { date, origin_airport, destination_airport, price_economy, price_business, price_platinum };
+    const airportData = {
+      date,
+      origin_airport,
+      destination_airport,
+      price_economy,
+      price_business,
+      price_platinum,
+    };
 
     try {
       const res = await fetch("/api/flightSchedule/add", {
@@ -43,13 +50,17 @@ const AddFlightSchedule = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#211f1e] p-4">
+    <div className="flex text-black items-center justify-center min-h-screen bg-[#211f1e] p-4">
       <div className="w-full max-w-xl">
-        <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">Add Flight Schedule</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">
+          Add Flight Schedule
+        </h2>
         <div className="bg-white bg-opacity-70 p-8 rounded-xl shadow-xl backdrop-blur-lg transform hover:scale-105 transition duration-300 ease-in-out">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Date:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Date:
+              </label>
               <input
                 type="date"
                 value={date}
@@ -59,7 +70,9 @@ const AddFlightSchedule = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Origin Airport Code:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Origin Airport Code:
+              </label>
               <input
                 type="text"
                 value={origin_airport}
@@ -69,7 +82,9 @@ const AddFlightSchedule = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Destination Airport Code:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Destination Airport Code:
+              </label>
               <input
                 type="text"
                 value={destination_airport}
@@ -79,7 +94,9 @@ const AddFlightSchedule = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Economy Price:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Economy Price:
+              </label>
               <input
                 type="number"
                 value={price_economy}
@@ -89,7 +106,9 @@ const AddFlightSchedule = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Business Price:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Business Price:
+              </label>
               <input
                 type="number"
                 value={price_business}
@@ -99,7 +118,9 @@ const AddFlightSchedule = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-medium mb-2">Platinum Price:</label>
+              <label className="block text-gray-800 font-medium mb-2">
+                Platinum Price:
+              </label>
               <input
                 type="number"
                 value={price_platinum}
@@ -117,7 +138,9 @@ const AddFlightSchedule = () => {
               </button>
             </div>
           </form>
-          {message && <p className="mt-6 text-center text-gray-800">{message}</p>}
+          {message && (
+            <p className="mt-6 text-center text-gray-800">{message}</p>
+          )}
         </div>
       </div>
     </div>

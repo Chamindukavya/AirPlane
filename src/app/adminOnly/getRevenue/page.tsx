@@ -61,6 +61,9 @@ export function RevenuePage() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        // Check if any value type is string instead of number
+
+        console.log(data.aircraftRevenue);
         setRevenue(data.aircraftRevenue);
       } catch (err) {
         console.error(err);
