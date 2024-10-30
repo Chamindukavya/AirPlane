@@ -50,7 +50,7 @@ function SeatSelection({
             key={seat.seatId}
             onClick={() => handleSelectSeat(seat)}
             disabled={bookedSeats.includes(seat.seatId)}
-            className={`w-8 h-8 p-0.5 text-xs border rounded flex items-center justify-center ${
+            className={`w-15 h-8 p-0.5 text-xs border rounded flex items-center justify-center ${
               bookedSeats.includes(seat.seatId)
                 ? 'bg-red-500 text-white cursor-not-allowed'
                 : selectedSeats.includes(seat.seatId)
