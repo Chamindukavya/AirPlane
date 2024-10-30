@@ -20,6 +20,7 @@ export default function FlightSchedulePage() {
         const response = await fetch("/api/flightSchedule/show");
         const data: FlightSchedule[] = await response.json();
         setSchedules(data);
+        console.log("wwwwwwwwwwwww",data);
         setLoading(false);
       } catch (err) {
         console.error("Failed to fetch data", err);

@@ -38,7 +38,7 @@ const AddAirport = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#211f1e] text-white p-6 relative overflow-hidden">
       <h2 className="text-4xl font-bold text-blue-400 mb-8 z-10">Add New Aircraft</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl w-full mx-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 border border-opacity-30 border-gray-400">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl w-full mx-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 border border-opacity-30 border-gray-400 ">
         
         <div className="w-full">
           <form onSubmit={handleSubmit}>

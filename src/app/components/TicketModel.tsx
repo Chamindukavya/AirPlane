@@ -13,6 +13,7 @@ type Ticket = {
   date: string;
   origin_airport: string;
   destination_airport: string;
+  status: string;
 };
 
 type TicketModalProps = {
@@ -40,6 +41,7 @@ const TicketModal: React.FC<TicketModalProps> = ({
           },
           body: JSON.stringify({ ticket_id: ticket.ticket_id }),
         });
+
 
         if (!response.ok) {
           throw new Error("Failed to cancel the ticket");
@@ -240,6 +242,26 @@ const TicketModal: React.FC<TicketModalProps> = ({
                 Destination Airport:
               </p>
               <p>{ticket.destination_airport}</p>
+            </div>
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                padding: "10px",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <p
+                style={{
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#333",
+                }}
+              >
+                Flight Status:
+              </p>
+              <p>{ticket.status}</p>
             </div>
           </div>
         </div>

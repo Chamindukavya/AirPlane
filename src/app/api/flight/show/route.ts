@@ -10,18 +10,17 @@ export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
 
   try {
     const connection = await mysql.createConnection(connectionParams);
 
     // Call the stored procedure with the user ID to get discounted prices
-    const [rows] = await connection.execute<any[]>(`CALL get_flight_schedule_with_dynamic_discounts(?)`, [userId]);
+    const [rows] = await connection.execute<any[]>(`SELECT * 
+FROM flight 
+JOIN flightschedule as fs ON flight.flightschedule_id = fs.flightschedule_id`);
 
     connection.end();
-    return NextResponse.json(rows[0]);  // Access the first result set
+    return NextResponse.json(rows);  // Access the first result set
   } catch (err) {
     console.error('ERROR: API - ', (err as Error).message);
 

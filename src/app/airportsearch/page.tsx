@@ -14,6 +14,10 @@ type Flight = {
   aircraft_id: number;
   start_time: string;
   end_time: string;
+  price_economy: number;
+  price_business: number;
+  price_platinum: number;
+  state: string;
 };
 
 type PopularDestination = {
@@ -110,6 +114,7 @@ const AirportSearch: React.FC = () => {
       );
       if (!response.ok) throw new Error("Failed to fetch flights");
       const data: Flight[] = await response.json();
+      console.log("**********",data);
       setFlights(data);
       setIsFlightViewOpen(true);
     } catch (error) {
@@ -230,7 +235,7 @@ const AirportSearch: React.FC = () => {
           >
             <option value="">Select Destination Airport</option>
             {airports.map((airport) => (
-              <option key={airport.airport_code} value={airport.airport_code}>
+              <option key={airport.air} value={airport.airport_code}>
                 {airport.airport_name} ({airport.airport_code})
               </option>
             ))}
@@ -282,9 +287,7 @@ const AirportSearch: React.FC = () => {
                     <p className="text-gray-300">
                       <strong>Flight ID:</strong> {schedule.flight_id}
                     </p>
-                    <p className="text-gray-300">
-                      <strong>Schedule ID:</strong> {schedule.flightSchedule_id}
-                    </p>
+                   
                     <p className="text-gray-300">
                       <strong>Start Time:</strong> {schedule.start_time}
                     </p>
@@ -292,8 +295,16 @@ const AirportSearch: React.FC = () => {
                       <strong>End Time:</strong> {schedule.end_time}
                     </p>
                     <p className="text-gray-300">
-                      <strong>Aircraft:</strong> {schedule.aircraft_id}
+                      <strong>Price Economy:</strong> {schedule.price_economy}
                     </p>
+                    <p className="text-gray-300">
+                      <strong>Price Business:</strong> {schedule.price_business}
+                    </p>
+                    <p className="text-gray-300">
+                      <strong>Price Platinum:</strong> {schedule.price_platinum}
+                    </p>
+                    
+                   
                     <button
                       onClick={() => handleBooking(schedule)}
                       className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"

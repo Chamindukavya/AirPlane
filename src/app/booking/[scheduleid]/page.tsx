@@ -116,7 +116,7 @@ export default function BookingPage() {
         setResponseMessage(result.message || "Booking successful!");
       } else {
         const errorResult = await response.json();
-        setResponseMessage(errorResult.message || "Failed to book flight.");
+        setResponseMessage(errorResult.message || "");
       }
       router.push("/profile");
 

@@ -40,7 +40,6 @@ const Login: React.FC = () => {
       {/* Left Side: Image and Text */}
       <div className="w-1/2 bg-cover bg-center md:flex flex-col" style={{ backgroundImage: "url('login.jpg')" }}>
         <div className="flex flex-col items-start p-10 bg-black bg-opacity-40">
-          {/* Move the text to the top of the left-hand side box */}
           <div className="text-white">
             <h1 className="text-4xl font-bold">Welcome to Airline Services</h1>
             <p className="mt-4 text-lg">Manage your reservations, access exclusive offers, and enjoy personalized service.</p>
@@ -49,7 +48,6 @@ const Login: React.FC = () => {
         </div>
       </div>
     
-
       {/* Right Side with Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-gradient-to-r from-gray-400 via-blue-400 to-gray-500">
         <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
@@ -83,7 +81,7 @@ const Login: React.FC = () => {
               />
             </div>
 
-            {/* Centering the Login Button with Sign Up Button Style */}
+            {/* Centering the Login Button */}
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -95,15 +93,17 @@ const Login: React.FC = () => {
             </div>
           </form>
 
-          {/* Sign Up Prompt and Button */}
+          {/* Sign Up Prompt with Link */}
           <div className="mt-6 text-center">
-            <p className="text-base text-gray-700">Don't have an account? <span className="font-semibold">Sign up first!</span></p>
-            <button
-              onClick={() => router.push('/Signup')}
-              className="mt-4 px-4 py-2 text-white bg-gradient-to-r from-blue-500 to-black rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
-            >
-              Sign Up
-            </button>
+            <p className="text-base text-gray-700">
+              Don't have an account?{" "}
+              <span
+                onClick={() => router.push('/Signup')}
+                className="font-semibold text-blue-500 cursor-pointer hover:underline"
+              >
+                Sign up first!
+              </span>
+            </p>
           </div>
         </div>
       </div>
