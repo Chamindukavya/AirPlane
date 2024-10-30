@@ -15,15 +15,13 @@ export async function GET(request: NextRequest) {
     try {
         const connection = await mysql.createConnection(connectionParams);
         
-        const [rows] = await connection.execute(
-            'SELECT seat_id FROM seat WHERE flight_id = ? AND is_available = 0',
-            [scheduleid]
-        );
+        // Call the stored procedure to get unavailable seats
+        const [rows] = await connection.execute('CALL GetUnavailableSeats(?)', [scheduleid]);
 
         await connection.end();
 
         // Format data as an array of integers
-        const seatIds = rows.map((row: { seat_id: any; }) => row.seat_id);
+        const seatIds = rows[0].map((row: { seat_id: any; }) => row.seat_id);
 
         // Print the formatted data to the console
         console.log('Fetched Data:', seatIds);

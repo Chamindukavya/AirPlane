@@ -8,9 +8,10 @@ export async function POST(request: NextRequest) {
   try {
     const { flightSchedule_id, start_time, end_time, aircraft_id, country } = await request.json();
     const connection = await mysql.createConnection(connectionParams);
+    console.log(flightSchedule_id);
 
     const insert_query = `
-      INSERT INTO flight (flight_shedule_id, start_time, end_time, aircraft_id)
+      INSERT INTO flight (flightSchedule_id, start_time, end_time, aircraft_id)
       VALUES (?, ?, ?, ?)
     `;
 

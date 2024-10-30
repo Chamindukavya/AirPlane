@@ -99,6 +99,26 @@ const TicketModal: React.FC<TicketModalProps> = ({
             </div>
             <div
               style={{
+                backgroundColor: "rgba(255, 255, 255, 0.7)", // Light ash box with transparency
+                padding: "10px",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <p
+                style={{
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#333",
+                }}
+              >
+                ticket_id:
+              </p>
+              <p>{ticket.ticket_id}</p>
+            </div>
+            <div
+              style={{
                 backgroundColor: "rgba(255, 255, 255, 0.7)", // Light ash box
                 padding: "10px",
                 borderRadius: "8px",

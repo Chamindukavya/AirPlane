@@ -1,3 +1,4 @@
+// File: /app/api/seats/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 import { GetDBSettings } from '@/sharedCode/common';
@@ -15,19 +16,23 @@ export async function GET(request: NextRequest) {
     try {
         const connection = await mysql.createConnection(connectionParams);
         
-        const [rows] = await connection.execute(
-            'SELECT class FROM seat WHERE flight_id = ? ',
+        // Call the stored procedure to fetch seat classes
+        const [rows]: any[] = await connection.execute(
+            'CALL GetSeatClassesByFlight(?);',
             [scheduleid]
         );
 
         await connection.end();
 
+        // Check if any rows were returned
+        if (rows.length === 0) {
+            return NextResponse.json({ error: 'No classes found for the given flight' }, { status: 404 });
+        }
+
         // Format data as an array 
-        const seatclasses = rows.map(row => row.class);
+        const seatclasses = rows[0].map(row => row.class);
 
         // Print the formatted data to the console
-        console.log(' Data:', rows);
-
         console.log('Fetched Data:', seatclasses);
 
         // Send the formatted data in the response

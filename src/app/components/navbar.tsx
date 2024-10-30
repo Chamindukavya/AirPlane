@@ -8,12 +8,13 @@ const Navbar: React.FC = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="bg-white p-4 shadow-lg">
+    <nav className="bg-black p-4 shadow-lg">
       <React.Fragment>
         <div className="container mx-auto flex justify-between items-center">
           {/* Brand/Logo Section */}
-          <div className="text-blue-600 font-bold text-2xl tracking-wide">
-            B Airlines
+          <div className="text-white font-bold text-2xl tracking-wide flex items-center space-x-2">
+            <img src="/logo1.jpg" alt="Logo" className="h-8 w-8" /> {/* Add logo image here */}
+            <span>B Airlines</span>
           </div>
 
           {/* Links Section */}
@@ -21,23 +22,23 @@ const Navbar: React.FC = async () => {
             {/* Home Link */}
             <Link
               href="/"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+              className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
             >
               Home
             </Link>
 
             {/* Tickets Link */}
             <Link
-              href="/showTicket"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+              href="/airportsearch"
+              className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
             >
-              Tickets
+              Book
             </Link>
 
             {/* Profile Link */}
             <Link
               href="/profile"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+              className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
             >
               Profile
             </Link>
@@ -46,7 +47,7 @@ const Navbar: React.FC = async () => {
             {session?.user?.role_name === "admin" ? (
               <Link
                 href="/Admin"
-                className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+                className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
               >
                 Admin
               </Link>
@@ -54,20 +55,20 @@ const Navbar: React.FC = async () => {
 
             {/* Login / Signup Links - Conditionally Rendered */}
             {session?.user ? (
-              <span className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">
-                <Logout /> {/* Logout styled in blue */}
+              <span className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out">
+                <Logout /> {/* Logout styled in white */}
               </span>
             ) : (
               <>
                 <Link
                   href="/Login"
-                  className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+                  className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
                 >
                   Login
                 </Link>
                 <Link
                   href="/Signup"
-                  className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+                  className="text-white hover:bg-white hover:bg-opacity-10 px-3 py-2 rounded-md transition duration-300 ease-in-out"
                 >
                   Sign up
                 </Link>

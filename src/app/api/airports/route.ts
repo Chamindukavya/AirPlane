@@ -9,11 +9,12 @@ export async function GET() {
   try {
     const connection = await mysql.createConnection(connectionParams);
 
-    const [rows] = await connection.query('SELECT airport_code, airport_name FROM airports');
+    // Call the stored procedure
+    const [rows] = await connection.execute('CALL GetAllAirports()');
 
     await connection.end();
 
-    return NextResponse.json(rows);
+    return NextResponse.json(rows[0]);  // rows[0] will contain the actual data
   } catch (err) {
     console.error('ERROR: API - ', (err as Error).message);
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });

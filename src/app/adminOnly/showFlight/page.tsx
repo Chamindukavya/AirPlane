@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 type FlightSchedule = {
   flight_id: number;
-  
   date: string;
   origin_airport: string;
   destination_airport: string;
@@ -13,13 +12,13 @@ type FlightSchedule = {
   start_time: string;
   end_time: string;
   aircraft_id: number;
-  price_platinum: string
+  price_platinum: string;
 };
 
 export default function FlightSchedulePage() {
   const [schedules, setSchedules] = useState<FlightSchedule[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -33,16 +32,18 @@ export default function FlightSchedulePage() {
         setLoading(false);
       }
     }
-
     fetchData();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-lg font-semibold text-gray-400">Loading...</p>
+      </div>
+    );
   }
 
   const deleteFlight = async (schedule: FlightSchedule) => {
-
     try {
       const response = await fetch("/api/flight/delete", {
         method: "DELETE",
@@ -52,56 +53,61 @@ export default function FlightSchedulePage() {
         body: JSON.stringify({ flight_id: schedule.flight_id }),
       });
       const data = await response.json();
+      setSchedules(schedules.filter((item) => item.flight_id !== schedule.flight_id));
       console.log(data);
     } catch (err) {
       console.error("Failed to delete flight", err);
     }
-  }
+  };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {schedules.map((schedule, index) => (
-        <div key={index} className="p-4 border rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold">Flight</h3>
-          
-          <p>
-            <strong>Origin Airport:</strong> {schedule.origin_airport}
-          </p>
-          <p>
-            <strong>Destination Airport:</strong> {schedule.destination_airport}
-          </p>
-          <p>
-            <strong>Date:</strong> {schedule.date}
-          </p>
-          
-          <p>
-            <strong>Price (Economy):</strong> ${schedule.price_economy}
-          </p>
-          <p>
-            <strong>Price (Business):</strong> ${schedule.price_business}
-          </p>
-          <p>
-            <strong>Price (Platinum):</strong> ${schedule.price_platinum}
-          </p>
-          <p>
-            <strong>Start Time:</strong> {schedule.start_time}
-          </p>
-          <p>
-            <strong>End Time:</strong> {schedule.end_time}
-          </p>
-          <p>
-            <strong>Aircraft ID:</strong> {schedule.aircraft_id}
-          </p>
-       
-          <button
-            onClick={() => deleteFlight(schedule)}
-            className="mt-2 bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600"
+    <div className="min-h-screen bg-[#211f1e] py-8 px-4">
+      <h1 className="text-3xl font-bold text-center text-blue-400 mb-10">Flight Schedules</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {schedules.map((schedule) => (
+          <div
+            key={schedule.flight_id}
+            className="bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 border border-opacity-30 border-gray-400"
           >
-            delete
-          </button>
-          
-        </div>
-      ))}
+            <h3 className="text-xl font-semibold text-center text-blue-300 mb-4">Flight Information</h3>
+            <div className="space-y-2 text-gray-200">
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Origin:</span> <span>{schedule.origin_airport}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Destination:</span> <span>{schedule.destination_airport}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Date:</span> <span>{schedule.date}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Economy Price:</span> <span>${schedule.price_economy}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Business Price:</span> <span>${schedule.price_business}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Platinum Price:</span> <span>${schedule.price_platinum}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Start Time:</span> <span>{schedule.start_time}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">End Time:</span> <span>{schedule.end_time}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="font-medium text-blue-300">Aircraft ID:</span> <span>{schedule.aircraft_id}</span>
+              </p>
+            </div>
+            <button
+              onClick={() => deleteFlight(schedule)}
+              className="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

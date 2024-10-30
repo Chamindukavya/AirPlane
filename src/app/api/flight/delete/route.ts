@@ -8,16 +8,17 @@ export async function DELETE(request: NextRequest) {
   try {
     const { flight_id } = await request.json();
     console.log('flight_id', flight_id);
+
     const connection = await mysql.createConnection(connectionParams);
 
+    // Call the stored procedure to delete the flight data
     await connection.execute(
-      `
-      DELETE FROM flight WHERE flight_id = ?;
-      `,
+      'CALL DeleteFlight(?)', 
       [flight_id]
     );
+
     connection.end();
-    
+
     return NextResponse.json({ message: 'Data deleted successfully' });
   } catch (err) {
     console.log('ERROR: API - ', (err as Error).message);
