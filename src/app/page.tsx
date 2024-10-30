@@ -41,12 +41,15 @@ export default function HomePage() {
       </div>
 
       {/* Other Content Sections */}
-      <div className="mt-8 text-center">
+      <div className="bg-blue-700">
+        
+      </div>
+      <div className="mt-8  text-center">
         <h2 className="text-5xl text-white font-bold">
           Experience Excellence with Our Services!
         </h2>
       </div>
-      <div className="mt-8">
+      <div className="mt-8 ">
         <ImageCarousel />
       </div>
       <div className="mt-8 text-center">
