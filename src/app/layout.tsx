@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "B AirLines",
-  description: "B airlines is a platform that allows you to book flights"
+  description: "B airlines is a platform that allows you to book flights",
 };
 
 export default function RootLayout({
@@ -17,14 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-       
         <AuthProvider>
           <Navbar />
           {children}
         </AuthProvider>
-        <Footer/>
+        <Footer />
       </body>
-      
     </html>
   );
 }

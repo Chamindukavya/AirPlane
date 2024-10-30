@@ -9,15 +9,15 @@ export async function POST(request: NextRequest) {
         const { fromDate, toDate } = await request.json();
         const connection = await mysql.createConnection(connectionParams);
 
-        // Call the stored procedure to get the passenger count
-        const [passengerCount]: any[] = await connection.execute(
-            'CALL GetPassengerCountByDateRange(?, ?)', 
-            [fromDate, toDate]
-        );
-
-        return NextResponse.json({
-            passengerCount: passengerCount
-        });
+      // Fetch the next immediate flight for the given flight_id
+      const [passengerCount] :any[] = await connection.execute(
+        `CALL GetPassengerCountByDestination(?,?)`,
+        [fromDate, toDate]
+      );
+     
+      return NextResponse.json({
+        passengerCount: passengerCount
+      });
     } catch (err) {
         console.log('ERROR: API - ', (err as Error).message);
 
